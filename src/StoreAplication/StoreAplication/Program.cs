@@ -1,4 +1,27 @@
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+using Infrastructure.SQLAdapter;
+using Infrastructure.SQLAdapter.Gateway;
+using Infrastructure.SQLAdapter.Repositories;
+using Microsoft.AspNetCore.Connections;
+using StoreAplication.AutoMapper;
+using StoreAplication.Middleware;
+using UseCases.Gateway;
+using UseCases.Gateway.Repositories;
+using UseCases.UseCases;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//                      policy =>
+//                      {
+//                          policy.WithOrigins("http://localhost:4200", "https://personal-budget-manageme-7699c.web.app")
+//                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+//                            .AllowAnyHeader()
+//                            .AllowAnyMethod();
+//                      });
+//});
 
 // Add services to the container.
 
@@ -6,6 +29,23 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ConfigurationProfile));
+
+builder.Services.AddScoped<IUserUseCase, UserUseCase>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IProductRepository, ProductUseCase>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddScoped<IBranchUseCase, BranchUseCase>();
+builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+
+
+builder.Services.AddTransient<IDbConnectionBuilder>(e =>
+{
+    return new DbConnectionBuilder(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
@@ -18,7 +58,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseCors(MyAllowSpecificOrigins);
+
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandleMiddleware>();
 
 app.MapControllers();
 
