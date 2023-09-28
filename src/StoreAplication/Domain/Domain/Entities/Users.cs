@@ -8,11 +8,11 @@ using static Domain.Common.Enums;
 
 namespace Domain.Entities
 {
-    public class User
+    public class Users
     {
         public int UserId { get; set; }
 
-        public int BranchId { get; set; }
+        public int IdBranch { get; set; }
 
         public Name UserName { get; set; }
 

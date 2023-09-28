@@ -1,12 +1,37 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Domain.Commands.Branch;
+using Domain.Commands.User;
+using Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
+using UseCases.Gateway;
+using UseCases.UseCases;
 
 namespace StoreAplication.Controllers
 {
-    public class BranchController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BranchController : ControllerBase
     {
-        public IActionResult Index()
+
+        private readonly IBranchUseCase _branchUseCase;
+        private readonly IMapper _mapper;
+
+
+        public BranchController(IBranchUseCase branchUseCase, IMapper mapper)
         {
-            return View();
+            _branchUseCase = branchUseCase;
+            _mapper = mapper;
         }
+
+        [HttpPost]
+        public async Task<RegisterBranch> CreateBranchAsync([FromBody] RegisterBranch registerBranch)
+        {
+            return await _branchUseCase.CreateBranchAsync(_mapper.Map<Branchs>(registerBranch));
+        }
+
+
+
+
+
     }
 }

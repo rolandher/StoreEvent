@@ -1,4 +1,5 @@
 //var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+using AutoMapper.Data;
 using Infrastructure.SQLAdapter;
 using Infrastructure.SQLAdapter.Gateway;
 using Infrastructure.SQLAdapter.Repositories;
@@ -35,7 +36,7 @@ builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(C
 builder.Services.AddScoped<IUserUseCase, UserUseCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<IProductRepository, ProductUseCase>();
+builder.Services.AddScoped<IProductUseCase, ProductUseCase>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<IBranchUseCase, BranchUseCase>();
@@ -62,7 +63,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.UseMiddleware<ErrorHandleMiddleware>();
+//app.UseMiddleware<ErrorHandleMiddleware>();
 
 app.MapControllers();
 

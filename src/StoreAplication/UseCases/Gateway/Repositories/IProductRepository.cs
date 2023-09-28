@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.Commands.Product;
+using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,6 @@ namespace UseCases.Gateway.Repositories
 {
     public interface IProductRepository
     {
+        Task<RegisterProduct> CreateProductAsync(Products product);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Branch
+    public class Branchs
     {
         public int BranchId { get; set; }
 

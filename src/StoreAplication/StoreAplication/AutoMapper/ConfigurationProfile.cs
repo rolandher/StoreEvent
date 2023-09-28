@@ -1,4 +1,8 @@
 ﻿using AutoMapper;
+using Domain.Commands.Branch;
+using Domain.Commands.Product;
+using Domain.Commands.User;
+using Domain.Entities;
 
 namespace StoreAplication.AutoMapper
 {
@@ -6,9 +10,9 @@ namespace StoreAplication.AutoMapper
     {
         public ConfigurationProfile()
         {
-            CreateMap<NewUser, User>().ReverseMap();
-            CreateMap<NewBranch, Branch>().ReverseMap();
-            CreateMap<NewProduct, Product>().ReverseMap();
+            CreateMap<RegisterUser, Users>().ReverseMap();
+            CreateMap<RegisterProduct, Products>().ReverseMap();
+            CreateMap<RegisterBranch, Branchs>().ReverseMap();
 
         }
     }

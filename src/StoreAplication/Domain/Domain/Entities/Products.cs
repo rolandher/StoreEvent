@@ -7,11 +7,11 @@ using static Domain.Common.Enums;
 
 namespace Domain.Entities
 {
-    public class Product
+    public class Products
     {
         public int ProductId { get; set; }
 
-        public int BranchId { get; set; }
+        public int IdBranch { get; set; }
 
         public string ProductName { get; set; }
 

@@ -1,12 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Domain.Commands.User;
+using Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
+using UseCases.Gateway;
 
 namespace StoreAplication.Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
-        public IActionResult Index()
+
+        private readonly IUserUseCase _userUseCase;
+        private readonly IMapper _mapper;
+
+
+        public UserController(IUserUseCase userUseCase, IMapper mapper)
         {
-            return View();
+            _userUseCase = userUseCase;
+            _mapper = mapper;
         }
+
+        
+        [HttpPost]
+        public async Task<RegisterUser> CreateUserAsync([FromBody] RegisterUser registerUser)
+        {
+            return await _userUseCase.CreateUserAsync(_mapper.Map<Users>(registerUser));
+        }
+
+
     }
 }

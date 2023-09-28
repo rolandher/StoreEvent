@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Domain.Commands.User;
+using Domain.Entities;
+using Domain.ObjectValues;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +11,6 @@ namespace UseCases.Gateway.Repositories
 {
     public interface IUserRepository
     {
+        Task <RegisterUser> CreateUserAsync(Users user);
     }
 }
