@@ -10,5 +10,11 @@ namespace Domain.ObjectValues
     {
         public string Country { get; set; }
         public string City { get; set; }
+
+        public Location(string country, string city)
+        {
+            Country = country;
+            City = city;
+        }
     }
 }

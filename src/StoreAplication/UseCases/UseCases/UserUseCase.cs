@@ -17,9 +17,9 @@ namespace UseCases.UseCases
         {
             _userRepository = userRepository;
         }
-        public async Task<RegisterUser> CreateUserAsync(Users user)
+        public async Task<RegisterUserCommand> RegisterUserAsync(Users user)
         {
-            return await _userRepository.CreateUserAsync(user);
+            return await _userRepository.RegisterUserAsync(user);
         }
     }
 }

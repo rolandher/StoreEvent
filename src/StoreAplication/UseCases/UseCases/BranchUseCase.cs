@@ -16,12 +16,17 @@ namespace UseCases.UseCases
          private readonly IBranchRepository _branchRepository;
          public BranchUseCase(IBranchRepository branchRepository)
          { 
-        _branchRepository = branchRepository;
+            _branchRepository = branchRepository;
          }
-        public async Task<RegisterBranch> CreateBranchAsync(Branchs branch)
+        public async Task<RegisterBranchCommand> RegisterBranchAsync(Branchs branchs)
         {
-        return await _branchRepository.CreateBranchAsync(branch);
+                return await _branchRepository.RegisterBranchAsync(branchs);
         }
+
+               
+          
+        
+        
     }
 }
 

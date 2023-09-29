@@ -5,6 +5,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
 using UseCases.UseCases;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace StoreAplication.Controllers
 {
@@ -24,9 +25,9 @@ namespace StoreAplication.Controllers
         }
 
         [HttpPost]
-        public async Task<RegisterBranch> CreateBranchAsync([FromBody] RegisterBranch registerBranch)
+        public async Task<RegisterBranchCommand> RegisterBranchAsync([FromBody] RegisterBranchCommand registerBranchCommand)
         {
-            return await _branchUseCase.CreateBranchAsync(_mapper.Map<Branchs>(registerBranch));
+            return await _branchUseCase.RegisterBranchAsync(_mapper.Map<Branchs>(registerBranchCommand));
         }
 
 

@@ -11,6 +11,6 @@ namespace UseCases.Gateway.Repositories
 {
     public interface IUserRepository
     {
-        Task <RegisterUser> CreateUserAsync(Users user);
+        Task <RegisterUserCommand> RegisterUserAsync(Users user);
     }
 }

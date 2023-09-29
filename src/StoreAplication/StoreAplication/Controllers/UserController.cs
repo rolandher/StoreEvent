@@ -23,9 +23,9 @@ namespace StoreAplication.Controllers
 
         
         [HttpPost]
-        public async Task<RegisterUser> CreateUserAsync([FromBody] RegisterUser registerUser)
+        public async Task<RegisterUserCommand> RegisterUserAsync([FromBody] RegisterUserCommand registerUserCommand)
         {
-            return await _userUseCase.CreateUserAsync(_mapper.Map<Users>(registerUser));
+            return await _userUseCase.RegisterUserAsync(_mapper.Map<Users>(registerUserCommand));
         }
 
 

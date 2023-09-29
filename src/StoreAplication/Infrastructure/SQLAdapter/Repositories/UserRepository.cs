@@ -25,23 +25,23 @@ namespace Infrastructure.SQLAdapter.Repositories
             _mapper = mapper;
         }
 
-        public async Task<RegisterUser> CreateUserAsync(Users user)
+        public async Task<RegisterUserCommand> RegisterUserAsync(Users user)
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
             var userToCreate = new Users
             {
-                UserId = user.UserId,
                 UserName = user.UserName,
+                IdBranch = user.IdBranch,
                 UserEmail = user.UserEmail,
                 UserPassword = user.UserPassword,
                 UserRole = user.UserRole
             };
 
-            string sqlQuery = $"INSERT INTO {_tableName} (UserId, UserName, UserPassword, UserEmail, UserRole) VALUES (@UserId, @UserName, @UserPassword, @UserEmail, @UserRole)";
+            string sqlQuery = $"INSERT INTO {_tableName} (UserName, IdBranch, UserPassword, UserEmail, UserRole) VALUES (@UserName, @IdBranch, @UserPassword, @UserEmail, @UserRole)";
             
             var result = await connection.ExecuteAsync(sqlQuery, userToCreate);
             connection.Close();
-            return _mapper.Map<RegisterUser>(userToCreate);
+            return _mapper.Map<RegisterUserCommand>(userToCreate);
 
         }
 

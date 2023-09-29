@@ -19,9 +19,9 @@ namespace UseCases.UseCases
             _productRepository = productRepository;
         }
 
-        public async Task<RegisterProduct> CreateProductAsync(Products product)
+        public async Task<RegisterProductCommand> RegisterProductAsync(Products product)
         {
-            return await _productRepository.CreateProductAsync(product);
+            return await _productRepository.RegisterProductAsync(product);
         }
         
     }

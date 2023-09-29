@@ -11,6 +11,6 @@ namespace UseCases.Gateway.Repositories
 {
     public interface IBranchRepository
     {
-        Task<RegisterBranch> CreateBranchAsync(Branchs branch);
+        Task<RegisterBranchCommand> RegisterBranchAsync(Branchs branchs);
     }
 }

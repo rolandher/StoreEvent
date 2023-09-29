@@ -23,9 +23,9 @@ namespace StoreAplication.Controllers
 
         [HttpPost]
 
-        public async Task<RegisterProduct> CreateProductAsync([FromBody] RegisterProduct registerProduct)
+        public async Task<RegisterProductCommand> RegisterProductAsync([FromBody] RegisterProductCommand registerProduct)
         {
-            return await _productUseCase.CreateProductAsync(_mapper.Map<Products>(registerProduct));
+            return await _productUseCase.RegisterProductAsync(_mapper.Map<Products>(registerProduct));
         }
 
     }

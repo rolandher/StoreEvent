@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Domain.Common.Enums;
 
-namespace Domain.Entities
+namespace Infrastructure.DTO
 {
-    public class Products
+    public class RegisterProductDTO
     {
-        public int ProductId { get; set; }
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
+        public int ProductId { get; set; }
         [Required] public int BranchId { get; set; }
 
         [Required] public string ProductName { get; set; }
@@ -22,12 +25,15 @@ namespace Domain.Entities
 
         [Required] public int ProductInventoryStock { get; set; }
 
-        [Required] public CategoryEnum ProductCategory { get; set; }
+        [Required] public string ProductCategory { get; set; }
 
-        public virtual Branchs Branchs { get; set; }
+        [Required]
 
-        public Products(int branchId, string productName, string productDescription,
-            decimal productPrice, int productStock, CategoryEnum productCategory)
+        [ForeignKey("BranchId")]
+        public virtual RegisterBranchDTO Branch { get; set; }
+
+        public RegisterProductDTO(int branchId, string productName, string productDescription,
+                       decimal productPrice, int productStock, string productCategory)
         {
             BranchId = branchId;
             ProductName = productName;
@@ -36,5 +42,7 @@ namespace Domain.Entities
             ProductInventoryStock = productStock;
             ProductCategory = productCategory;
         }
+       
+
     }
 }

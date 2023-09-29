@@ -2,6 +2,7 @@
 using Dapper;
 using Domain.Commands.Branch;
 using Domain.Entities;
+using Domain.ObjectValues;
 using Infrastructure.SQLAdapter.Gateway;
 using System;
 using System.Collections.Generic;
@@ -24,21 +25,30 @@ namespace Infrastructure.SQLAdapter.Repositories
             _mapper = mapper;
         }
 
-        public async Task<RegisterBranch> CreateBranchAsync(Branchs branch)
+        public async Task<RegisterBranchCommand> RegisterBranchAsync(Branchs branchs)
         {
             var connection = await _dbConnectionBuilder.CreateConnectionAsync();
             var branchToCreate = new Branchs
             {
-                BranchId = branch.BranchId,
-                BranchName = branch.BranchName,
-                BranchLocation = branch.BranchLocation                
+                BranchName = branchs.BranchName,
+                BranchLocation = new Location
+                {
+                    City = branchs.BranchLocation.City,
+                    Country = branchs.BranchLocation.Country
+                }
             };
 
-            string sqlQuery = $"INSERT INTO {_tableName} (BranchId, BranchName, BranchLocation) VALUES ( @BranchID, @BranchName, @BranchLocation)";
+            string sqlQuery = $"INSERT INTO {_tableName} (BranchName, BranchLocation) VALUES (@BranchName, @BranchLocation)";
 
             var result = await connection.ExecuteAsync(sqlQuery, branchToCreate);
+
             connection.Close();
-            return _mapper.Map<RegisterBranch>(branchToCreate);
+
+            return _mapper.Map<RegisterBranchCommand>(branchToCreate);
+
+            
+
         }
+        
     }
 }

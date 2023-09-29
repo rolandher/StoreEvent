@@ -10,6 +10,6 @@ namespace UseCases.Gateway
 {
     public interface IBranchUseCase
     {
-        Task<RegisterBranch> CreateBranchAsync(Branchs branch);
+      Task<RegisterBranchCommand> RegisterBranchAsync(Branchs branchs);
     }
 }
