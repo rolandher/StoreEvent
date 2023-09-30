@@ -27,17 +27,15 @@ namespace Domain.Entities
 
         public virtual BranchEntity BranchEntity { get; set; }
 
-        public ProductEntity( ProductObjectName name, ProductObjectDescription description, ProductObjectPrice price, ProductObjectInventoryStock inventoryStock, ProductObjectCategory category, string branchId)
+        public ProductEntity( ProductObjectName name, ProductObjectDescription description, ProductObjectPrice price, ProductObjectCategory category, string branchId)
         {
             Name = name;            
             Description = description;
-            Price = price;
-            InventoryStock = inventoryStock;
+            Price = price;            
             Category = category;
             BranchId = branchId;
         }
-
-        
+               
 
     }
 }

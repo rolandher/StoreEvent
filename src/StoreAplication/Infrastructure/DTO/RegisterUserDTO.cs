@@ -18,7 +18,7 @@ namespace Infrastructure.DTO
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
         
         [Required] public string Name { get; set; }
 
@@ -28,7 +28,7 @@ namespace Infrastructure.DTO
 
         [Required] public string Email { get; set; }
 
-        [Required] public UserObjectRole Role { get; set; }
+        [Required] public string Role { get; set; }
 
         [Required] public string BranchId { get; set; }
 
@@ -37,7 +37,7 @@ namespace Infrastructure.DTO
         public virtual RegisterBranchDTO Branch { get; set; }
 
         
-        public RegisterUserDTO(string name, string lastname, string password, string email, UserObjectRole role, string branchId)
+        public RegisterUserDTO(string name, string lastname, string password, string email, string role, string branchId)
         {
             Name = name;     
             LastName = lastname;
@@ -45,6 +45,10 @@ namespace Infrastructure.DTO
             Email = email;
             Role = role;
             BranchId = branchId;
+        }
+
+        public RegisterUserDTO()
+        {
         }
     }
 }

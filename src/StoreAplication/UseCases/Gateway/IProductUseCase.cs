@@ -11,5 +11,9 @@ namespace UseCases.Gateway
     public interface IProductUseCase
     {
         Task<int> RegisterProductAsync(RegisterProductCommand registerProduct);
+        Task<string> RegisterProductInventoryAsync(RegisterProductInventoryCommand registerProductInventoryCommand);
+
+        Task<string> RegisterProductSaleAsync(RegisterProductSaleCommand productSaleCommand);
+        Task<string> RegisterSaleAsync(RegisterSaleCommand registerSaleCommand);
     }
 }

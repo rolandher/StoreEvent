@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
 using static Domain.Common.Enums;
+using static Domain.ObjectValues.ObjectValuesUser.UserObjectRole;
 
 namespace UseCases.UseCases
 {
@@ -27,17 +28,16 @@ namespace UseCases.UseCases
         {
             var userName = new UserObjectName(registerUser.Name, registerUser.LastName);
             var userPassword = new UserObjectPassword(registerUser.Password);
-            var userEmail = new UserObjectEmail(registerUser.Email);
-            var userRole = new UserObjectRole(registerUser.Role);
-            var userEntity = new UserEntity(userName, userPassword, userEmail, registerUser.Role, registerUser.BranchId);
+            var userEmail = new UserObjectEmail(registerUser.Email);           
+            var userEntity = new UserEntity(userName, userPassword, userEmail, 
+                (UserObjectRole)Enum.Parse(typeof(UserObjectRole), registerUser.Role), registerUser.BranchId);
            
 
             var userId = await _userRepository.RegisterUserAsync(userEntity);
 
             await RegisterAndPersistEvent("UserRegisteredEvent", userId, registerUser);
             return userId;
-        }
-            
+        }            
 
         public async Task RegisterAndPersistEvent(string eventName, int aggregateId, RegisterUserCommand eventBody)
         {

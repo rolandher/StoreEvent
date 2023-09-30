@@ -34,7 +34,7 @@ namespace Infrastructure.SQLAdapter.Repositories
 
             await _dbConnectionBuilder.SaveChangesAsync();
 
-            return branchToCreate.BranchId;
+            return branchToCreate.Id;
         }
 
     }

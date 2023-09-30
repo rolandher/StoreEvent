@@ -28,20 +28,18 @@ namespace Infrastructure.SQLAdapter.Repositories
 
             var userToCreate = new RegisterUserDTO(
 
-                userEntity.Name.Name, 
+                userEntity.Name.Name,
                 userEntity.Name.LastName,
                 userEntity.Password.Password,
-                userEntity.Email.Email,                                
-                userEntity.Role,
+                userEntity.Email.Email,
+                userEntity.Role.ToString(),
                 userEntity.BranchId);
 
             _dbConnectionBuilder.Add(userToCreate);
             await _dbConnectionBuilder.SaveChangesAsync();
 
-            return userToCreate.UserId;
-
+            return userToCreate.Id;
         }
-          
     }
 }
 

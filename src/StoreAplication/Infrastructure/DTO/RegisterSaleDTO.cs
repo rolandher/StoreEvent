@@ -9,6 +9,11 @@ namespace Infrastructure.DTO
 {
     public class RegisterSaleDTO
     {
-        [Required] public List<ProductSaleDTO> ProductSales { get; set; }
+        [Required] public List<RegisterProductSaleDTO> ProductSales { get; set; }
+
+        public RegisterSaleDTO(List<RegisterProductSaleDTO> productSales)
+        {
+            ProductSales = productSales;
+        }
     }
 }

@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Commands.Product
 {
-    public class RegisterProductInventoryCommand
+    public class RegisterProductSaleCommand
     {
         [Required] public string Id { get; set; }
         [Required] public int Quantity { get; set; }
 
-        public RegisterProductInventoryCommand(string id, int quantity)
+        public RegisterProductSaleCommand(string id, int quantity)
         {
             Id = id;
             Quantity = quantity;
         }
-        
     }
 }

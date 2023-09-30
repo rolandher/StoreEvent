@@ -15,7 +15,7 @@ namespace Infrastructure.DTO
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-        public int ProductId { get; set; }
+        public int Id { get; set; }
         [Required] public string Name { get; set; }
 
         [Required] public string Description { get; set; }
@@ -39,6 +39,10 @@ namespace Infrastructure.DTO
             Category = category;
             BranchId = branchId;
         }     
+
+        public RegisterProductDTO()
+        {
+        }
        
 
     }

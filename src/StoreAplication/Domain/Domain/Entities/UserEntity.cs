@@ -13,7 +13,7 @@ namespace Domain.Entities
     public class UserEntity
 
     {
-        public Guid UserId { get; set; }        
+        public Guid Id { get; set; }        
 
         [Required] public UserObjectName Name { get; set; }
 

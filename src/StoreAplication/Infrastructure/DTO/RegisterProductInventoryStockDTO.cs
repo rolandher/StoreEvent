@@ -9,9 +9,15 @@ namespace Infrastructure.DTO
 {
     public class RegisterProductInventoryStockDTO
     {
-        [Required] public int Id { get; set; }
+        [Required] public string Id { get; set; }
 
-        [Required] public int InventoryStock { get; set; }
+        [Required] public int Quantity { get; set; }
+
+        public RegisterProductInventoryStockDTO(string id, int quantity)
+        {
+            Id = id;
+            Quantity = quantity;
+        }
                
     }
 }

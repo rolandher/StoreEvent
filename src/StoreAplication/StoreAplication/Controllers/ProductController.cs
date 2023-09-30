@@ -22,10 +22,26 @@ namespace StoreAplication.Controllers
         }
 
         [HttpPost]
-
         public async Task<int> RegisterProductAsync([FromBody] RegisterProductCommand registerProductCommand)
         {
             return await _productUseCase.RegisterProductAsync(registerProductCommand);
+        }
+
+        [HttpPost]        
+        public async Task<string> RegisterProductInventoryAsync([FromBody] RegisterProductInventoryCommand registerProductInventoryCommand)
+        {
+            return await _productUseCase.RegisterProductInventoryAsync(registerProductInventoryCommand);
+        }
+        [HttpPost]        
+        public async Task<string> RegisterProductSaleAsync([FromBody] RegisterProductSaleCommand productSaleCommand)
+        {
+            return await _productUseCase.RegisterProductSaleAsync(productSaleCommand);
+        }
+
+        [HttpPost]
+        public async Task<string> RegisterSaleAsync([FromBody] RegisterSaleCommand registerSaleCommand)
+        {
+            return await _productUseCase.RegisterSaleAsync(registerSaleCommand);
         }
 
     }

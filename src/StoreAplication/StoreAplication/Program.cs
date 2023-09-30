@@ -1,4 +1,7 @@
 //var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+using Adapter;
+using Adapter.Common;
+using Adapter.Interfaces;
 using AutoMapper.Data;
 using Infrastructure.SQLAdapter;
 using Infrastructure.SQLAdapter.Repositories;
@@ -39,8 +42,8 @@ builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();
 
 builder.Services.AddControllers();
 
-//builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(MappingProfileMongo));
-//builder.Services.AddSingleton<IContextMongo>(provider => new ContextMongo(builder.Configuration.GetConnectionString("MongoConnection"), "Events"));
+builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(MappingProfileMongo));
+builder.Services.AddSingleton<IContextMongo>(provider => new ContextMongo(builder.Configuration.GetConnectionString("MongoConnection"), "Events"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

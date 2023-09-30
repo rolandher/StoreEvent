@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.DTO
 {
-    public class ProductSaleDTO
+    public class RegisterProductSaleDTO
     {
         [Required] public string Id { get; set; }
 
-        [Required] public int InventoryStock { get; set; }
+        [Required] public int Quantity { get; set; }
+
+        public RegisterProductSaleDTO(string id, int quantity)
+        {
+            Id = id;
+            Quantity = quantity;
+        }
                
     }
 }

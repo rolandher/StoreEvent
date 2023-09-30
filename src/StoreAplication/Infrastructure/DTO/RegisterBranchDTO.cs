@@ -12,7 +12,7 @@ namespace Infrastructure.DTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BranchId { get; set; }
+        public int Id { get; set; }
 
         [Required] public string BranchName { get; set; }
 
@@ -29,6 +29,10 @@ namespace Infrastructure.DTO
             BranchName = branchName;
             BranchCountry = branchCountry;
             BranchCity = branchCity;
+        }
+
+        public RegisterBranchDTO()
+        {
         }
     }
 }
