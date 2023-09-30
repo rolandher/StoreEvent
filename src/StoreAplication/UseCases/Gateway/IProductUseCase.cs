@@ -10,6 +10,6 @@ namespace UseCases.Gateway
 {
     public interface IProductUseCase
     {
-        Task<RegisterProductCommand> RegisterProductAsync(Products products);
+        Task<int> RegisterProductAsync(RegisterProductCommand registerProduct);
     }
 }

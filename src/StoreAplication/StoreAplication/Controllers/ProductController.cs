@@ -4,6 +4,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
 using UseCases.UseCases;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace StoreAplication.Controllers
 {
@@ -13,19 +14,18 @@ namespace StoreAplication.Controllers
     {
 
         private readonly IProductUseCase _productUseCase;
-        private readonly IMapper _mapper;
-
-        public ProductController(IProductUseCase productUseCase, IMapper mapper)
+        
+        public ProductController(IProductUseCase productUseCase)
         {
             _productUseCase = productUseCase;
-            _mapper = mapper;
+            
         }
 
         [HttpPost]
 
-        public async Task<RegisterProductCommand> RegisterProductAsync([FromBody] RegisterProductCommand registerProduct)
+        public async Task<int> RegisterProductAsync([FromBody] RegisterProductCommand registerProductCommand)
         {
-            return await _productUseCase.RegisterProductAsync(_mapper.Map<Products>(registerProduct));
+            return await _productUseCase.RegisterProductAsync(registerProductCommand);
         }
 
     }

@@ -15,24 +15,17 @@ namespace StoreAplication.Controllers
     {
 
         private readonly IBranchUseCase _branchUseCase;
-        private readonly IMapper _mapper;
 
-
-        public BranchController(IBranchUseCase branchUseCase, IMapper mapper)
+        public BranchController(IBranchUseCase branchUseCase)
         {
             _branchUseCase = branchUseCase;
-            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task<RegisterBranchCommand> RegisterBranchAsync([FromBody] RegisterBranchCommand registerBranchCommand)
+        public async Task<int> RegisterBranchAsync([FromBody] RegisterBranchCommand registerBranchCommand)
         {
-            return await _branchUseCase.RegisterBranchAsync(_mapper.Map<Branchs>(registerBranchCommand));
+            return await _branchUseCase.RegisterBranchAsync(registerBranchCommand);
         }
-
-
-
-
 
     }
 }

@@ -10,9 +10,7 @@ namespace StoreAplication.AutoMapper
     {
         public ConfigurationProfile()
         {
-            CreateMap<RegisterUser, Users>().ReverseMap();
-            CreateMap<RegisterProduct, Products>().ReverseMap();
-            CreateMap<RegisterBranch, Branchs>().ReverseMap();
+           
 
         }
     }

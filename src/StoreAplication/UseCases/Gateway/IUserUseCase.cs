@@ -11,6 +11,6 @@ namespace UseCases.Gateway
 {
     public interface IUserUseCase
     {
-        Task<RegisterUserCommand> RegisterUserAsync(Users user);
+        Task<int> RegisterUserAsync(RegisterUserCommand registerUser);
     }
 }

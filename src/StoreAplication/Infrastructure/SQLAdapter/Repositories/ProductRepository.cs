@@ -2,7 +2,7 @@
 using Dapper;
 using Domain.Commands.Product;
 using Domain.Entities;
-using Infrastructure.SQLAdapter.Gateway;
+using Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,40 +14,29 @@ namespace Infrastructure.SQLAdapter.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly IDbConnectionBuilder _dbConnectionBuilder;
-        private readonly IMapper _mapper;
-        private readonly string _tableName = "Products";
+        private readonly DbConnectionBuilder _dbConnectionBuilder;
+        
 
-        public ProductRepository(IDbConnectionBuilder dbConnectionBuilder, IMapper mapper)
+        public ProductRepository(DbConnectionBuilder dbConnectionBuilder)
         {
             _dbConnectionBuilder = dbConnectionBuilder;
-            _mapper = mapper;
+            
         }
 
-        public async Task<RegisterProductCommand> RegisterProductAsync(Products product)
+        public async Task<int> RegisterProductAsync(ProductEntity productEntity)
         {
-            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
+            var productToCreate = new RegisterProductDTO(
 
-            var productToCreate = new Products
-            {                
-                ProductName = product.ProductName,
-                IdBranch = product.IdBranch,
-                ProductPrice = product.ProductPrice,
-                ProductInventoryStock = product.ProductInventoryStock,
-                ProductDescription = product.ProductDescription,
-                ProductCategory = product.ProductCategory
-            };
-
-            string sqlQuery = $"INSERT INTO {_tableName} (ProductId, ProductName, ProductPrice, ProductInventoryStock, ProductDescription, ProductCategory) VALUES (@ProductId, @ProductName, @ProductPrice, @ProductInventoryStock, @ProductDescription, @ProductCategory)";
-
-            var result = await connection.ExecuteAsync(sqlQuery, productToCreate);
-
-            connection.Close();
-
-            return _mapper.Map<RegisterProductCommand>(productToCreate);
-
+                productEntity.Name.Name,
+                productEntity.Description.Description,
+                productEntity.Price.Price,
+                productEntity.Category,
+                productEntity.BranchId);                
+    
+                _dbConnectionBuilder.Add(productToCreate);
+                await _dbConnectionBuilder.SaveChangesAsync();
+    
+                return productToCreate.ProductId;            
         }
-
-
     }
 }

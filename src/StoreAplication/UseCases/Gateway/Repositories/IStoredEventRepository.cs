@@ -1,5 +1,4 @@
-﻿using Domain.Commands.Product;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace UseCases.Gateway.Repositories
 {
-    public interface IProductRepository
+    public interface IStoredEventRepository
     {
-        Task<int> RegisterProductAsync(ProductEntity productEntity);
+        Task<String> RegisterEvent(StoredEventEntity storedEvent);
     }
 }

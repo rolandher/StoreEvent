@@ -9,10 +9,10 @@ namespace Domain.Commands.Branch
 {
     public class RegisterBranchCommand
     {
-        [Required] public string BranchName { get; set; }
+        [Required] public string Name { get; set; }
 
-        [Required] public string BranchCountry { get; set; }
+        [Required] public string Country { get; set; }
 
-        [Required] public string BranchCity { get; set; }
+        [Required] public string City { get; set; }
     }
 }

@@ -9,11 +9,9 @@ namespace Infrastructure.DTO
 {
     public class ProductSaleDTO
     {
-        [Required] public int ProductId { get; set; }
+        [Required] public string Id { get; set; }
 
-        [Required] public decimal ProductPrice { get; set; }
-
-        [Required] public int ProductInventoryStock { get; set; }
+        [Required] public int InventoryStock { get; set; }
                
     }
 }

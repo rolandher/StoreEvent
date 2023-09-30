@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Domain.ObjectValues
 {
-    public class Location
+    public class BranchObjectLocation
     {
         public string Country { get; set; }
         public string City { get; set; }
 
-        public Location(string country, string city)
+        public BranchObjectLocation(string country, string city)
         {
             Country = country;
             City = city;

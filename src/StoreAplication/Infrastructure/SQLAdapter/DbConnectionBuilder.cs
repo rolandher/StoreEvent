@@ -1,5 +1,6 @@
-﻿using Infrastructure.SQLAdapter.Gateway;
+﻿using Infrastructure.DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,18 +10,17 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.SQLAdapter
 {
-    public class DbConnectionBuilder : IDbConnectionBuilder
+    public class DbConnectionBuilder : DbContext
     {
-        private readonly string _connectionString;
-        public DbConnectionBuilder(string connectionString)
+
+        public DbConnectionBuilder(DbContextOptions<DbConnectionBuilder> options) : base(options)
         {
-            _connectionString = connectionString;
         }
-        public async Task<IDbConnection> CreateConnectionAsync()
-        {
-            var connection = new SqlConnection(_connectionString);
-            await connection.OpenAsync();
-            return connection;
-        }
+
+        public DbSet<RegisterBranchDTO> BranchEntity { get; set; }
+        public DbSet<RegisterProductDTO> ProductEntity { get; set; }
+        public DbSet<RegisterUserDTO> UserEntity { get; set; }
+
+
     }
 }

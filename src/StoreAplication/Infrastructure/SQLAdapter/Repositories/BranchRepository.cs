@@ -3,7 +3,7 @@ using Dapper;
 using Domain.Commands.Branch;
 using Domain.Entities;
 using Domain.ObjectValues;
-using Infrastructure.SQLAdapter.Gateway;
+using Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,40 +15,27 @@ namespace Infrastructure.SQLAdapter.Repositories
 {
     public class BranchRepository : IBranchRepository
     {
-        private readonly IDbConnectionBuilder _dbConnectionBuilder;
-        private readonly IMapper _mapper;
-        private readonly string _tableName = "Branchs";
+        private readonly DbConnectionBuilder _dbConnectionBuilder;
 
-        public BranchRepository(IDbConnectionBuilder dbConnectionBuilder, IMapper mapper)
+        public BranchRepository(DbConnectionBuilder dbConnectionBuilder)
         {
             _dbConnectionBuilder = dbConnectionBuilder;
-            _mapper = mapper;
         }
 
-        public async Task<RegisterBranchCommand> RegisterBranchAsync(Branchs branchs)
+        public async Task<int> RegisterBranchAsync(BranchEntity branchEntity)
         {
-            var connection = await _dbConnectionBuilder.CreateConnectionAsync();
-            var branchToCreate = new Branchs
-            {
-                BranchName = branchs.BranchName,
-                BranchLocation = new Location
-                {
-                    City = branchs.BranchLocation.City,
-                    Country = branchs.BranchLocation.Country
-                }
-            };
+            var branchToCreate = new RegisterBranchDTO(
 
-            string sqlQuery = $"INSERT INTO {_tableName} (BranchName, BranchLocation) VALUES (@BranchName, @BranchLocation)";
+            branchEntity.Name.Name,
+            branchEntity.Location.Country,
+            branchEntity.Location.City);
 
-            var result = await connection.ExecuteAsync(sqlQuery, branchToCreate);
+            _dbConnectionBuilder.Add(branchToCreate);
 
-            connection.Close();
+            await _dbConnectionBuilder.SaveChangesAsync();
 
-            return _mapper.Map<RegisterBranchCommand>(branchToCreate);
-
-            
-
+            return branchToCreate.BranchId;
         }
-        
+
     }
 }

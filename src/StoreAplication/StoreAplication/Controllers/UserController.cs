@@ -12,20 +12,17 @@ namespace StoreAplication.Controllers
     {
 
         private readonly IUserUseCase _userUseCase;
-        private readonly IMapper _mapper;
-
-
-        public UserController(IUserUseCase userUseCase, IMapper mapper)
+        
+        public UserController(IUserUseCase userUseCase)
         {
             _userUseCase = userUseCase;
-            _mapper = mapper;
+            
         }
-
         
         [HttpPost]
-        public async Task<RegisterUserCommand> RegisterUserAsync([FromBody] RegisterUserCommand registerUserCommand)
+        public async Task<int> RegisterUserAsync([FromBody] RegisterUserCommand registerUserCommand)
         {
-            return await _userUseCase.RegisterUserAsync(_mapper.Map<Users>(registerUserCommand));
+            return await _userUseCase.RegisterUserAsync(registerUserCommand);
         }
 
 

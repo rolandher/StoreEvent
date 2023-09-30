@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.ObjectValues.ObjectValuesUser;
 
 namespace Infrastructure.DTO
 {
@@ -18,28 +19,32 @@ namespace Infrastructure.DTO
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
-        [Required] public int BranchId { get; set; }
+        
+        [Required] public string Name { get; set; }
 
-        [Required] public string UserName { get; set; }
+        [Required] public string LastName { get; set; }
 
-        [Required] public string UserPassword { get; set; }
+        [Required] public string Password { get; set; }
 
-        [Required] public string UserEmail { get; set; }
+        [Required] public string Email { get; set; }
 
-        [Required] public string UserRole { get; set; }       
+        [Required] public UserObjectRole Role { get; set; }
+
+        [Required] public string BranchId { get; set; }
 
         [Required]
         [ForeignKey("BranchId")]
         public virtual RegisterBranchDTO Branch { get; set; }
 
-        public RegisterUserDTO(string name,int branchId, string userPassword, string email, string role)
+        
+        public RegisterUserDTO(string name, string lastname, string password, string email, UserObjectRole role, string branchId)
         {
-            Name = name;
-            BranchId = BranchId;
-            UserPassword = userPassword;
+            Name = name;     
+            LastName = lastname;
+            Password = password;
             Email = email;
             Role = role;
-        }
+            BranchId = branchId;
         }
     }
 }
