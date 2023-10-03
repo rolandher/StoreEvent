@@ -9,14 +9,7 @@ namespace Domain.Commands.Product
 {
     public class RegisterProductInventoryCommand
     {
-        [Required] public string Id { get; set; }
-        [Required] public int Quantity { get; set; }
-
-        public RegisterProductInventoryCommand(string id, int quantity)
-        {
-            Id = id;
-            Quantity = quantity;
-        }
+       [Required] public int Quantity { get; set; }       
         
     }
 }

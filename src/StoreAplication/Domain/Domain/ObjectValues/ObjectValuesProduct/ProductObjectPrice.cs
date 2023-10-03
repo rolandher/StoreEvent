@@ -10,9 +10,9 @@ namespace Domain.ObjectValues.ObjectValuesProduct
     {
         public double Price { get; set; }
         
-        public ProductObjectPrice(double Price)
+        public ProductObjectPrice(double price)
         {
-            Price = Price;
+            Price = price;
         }
     }
 }

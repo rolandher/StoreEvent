@@ -15,7 +15,7 @@ namespace Adapter.Data
 
         public string StoredName { get; set; }
 
-        public int AggregateId { get; set; }
+        public string AggregateId { get; set; }
 
         public string EventBody { get; set; }
     }

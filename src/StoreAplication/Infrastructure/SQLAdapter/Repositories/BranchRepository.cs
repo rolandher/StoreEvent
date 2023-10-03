@@ -22,7 +22,7 @@ namespace Infrastructure.SQLAdapter.Repositories
             _dbConnectionBuilder = dbConnectionBuilder;
         }
 
-        public async Task<int> RegisterBranchAsync(BranchEntity branchEntity)
+        public async Task<BranchEntity> RegisterBranchAsync(BranchEntity branchEntity)
         {
             var branchToCreate = new RegisterBranchDTO(
 
@@ -34,7 +34,10 @@ namespace Infrastructure.SQLAdapter.Repositories
 
             await _dbConnectionBuilder.SaveChangesAsync();
 
-            return branchToCreate.Id;
+            branchEntity.BranchId = branchToCreate.BranchId;
+
+            return branchEntity;
+
         }
 
     }

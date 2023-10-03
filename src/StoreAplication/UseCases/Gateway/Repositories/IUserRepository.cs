@@ -11,6 +11,6 @@ namespace UseCases.Gateway.Repositories
 {
     public interface IUserRepository
     {
-        Task <int> RegisterUserAsync(UserEntity userEntity);
+        Task <UserEntity> RegisterUserAsync(UserEntity userEntity);
     }
 }

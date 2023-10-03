@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Adapter.Common
 {
-    public class MappingProfileMongo : Profile
+    public class ProfileMongo : Profile
     {
-        public MappingProfileMongo()
+        public ProfileMongo()
         {
             CreateMap<StoredEventDTO, StoredEventEntity>().ReverseMap();
         }

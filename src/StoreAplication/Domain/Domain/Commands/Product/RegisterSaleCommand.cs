@@ -10,11 +10,6 @@ namespace Domain.Commands.Product
 {
     public class RegisterSaleCommand
     {
-        [Required] public List<ProductEntity> Products { get; set; }
-
-        public RegisterSaleCommand(List<ProductEntity> products)
-        {
-            Products = products;
-        }
+        [Required] public RegisterProductSaleCommand Products { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Domain.Commands.User;
 using Domain.Entities;
 using Domain.ObjectValues;
+using Domain.Response.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace UseCases.Gateway
 {
     public interface IUserUseCase
     {
-        Task<int> RegisterUserAsync(RegisterUserCommand registerUser);
+        Task<UserResponse> RegisterUserAsync(RegisterUserCommand registerUser);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Domain.Commands.Product;
 using Domain.Entities;
+using Domain.ObjectValues.ObjectValuesProduct;
+using Domain.Response.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +12,13 @@ namespace UseCases.Gateway.Repositories
 {
     public interface IProductRepository
     {
-        Task<int> RegisterProductAsync(ProductEntity productEntity);
+        Task<ProductEntity> RegisterProductAsync(ProductEntity productEntity);
 
-        Task<string> RegisterProductInventoryAsync(RegisterProductInventoryCommand registerProductInventoryCommand);
+        Task<ProductResponse> RegisterProductInventoryAsync(ProductObjectInventoryStock product, Guid productId);
 
-        Task<string> RegisterProductSaleAsync(RegisterProductSaleCommand productSaleCommand);
+        Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(ProductObjectInventoryStock product, Guid productId);
 
-        Task<string> RegisterSaleAsync(RegisterSaleCommand registerSaleCommand);
+        Task<ProductResponse> RegisterProductResellerSaleAsync(ProductObjectInventoryStock product, Guid productId);
+
     }
 }

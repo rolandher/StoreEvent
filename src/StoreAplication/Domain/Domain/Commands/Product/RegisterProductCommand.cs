@@ -19,6 +19,6 @@ namespace Domain.Commands.Product
 
         [Required] public string Category { get; set; }
 
-        [Required] public string BranchId { get; set; }
+        [Required] public Guid BranchId { get; set; }
     }
 }

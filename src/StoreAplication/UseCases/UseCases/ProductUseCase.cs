@@ -11,6 +11,8 @@ using Domain.Commands.Product;
 using Domain.ObjectValues.ObjectValuesProduct;
 using Newtonsoft.Json;
 using Domain.ObjectValues.ObjectValuesUser;
+using Domain.Response.Product;
+using Domain.ProductEvent;
 
 namespace UseCases.UseCases
 {
@@ -25,64 +27,74 @@ namespace UseCases.UseCases
             _storedEvent = storedEvent;
         }
 
-        public async Task<int> RegisterProductAsync(RegisterProductCommand registerProduct)
+        public async Task<RegisterProductCommand> RegisterProductAsync(RegisterProductCommand registerProduct)
         {
             var productName = new ProductObjectName(registerProduct.Name);
             var productDescription = new ProductObjectDescription(registerProduct.Description);
-            var productPrice = new ProductObjectPrice(registerProduct.Price); 
-            var productEntity = new ProductEntity(productName, productDescription, productPrice,
-                (ProductObjectCategory)Enum.Parse(typeof(ProductObjectCategory), registerProduct.Category), registerProduct.BranchId);
-                
-            var productId = await _productRepository.RegisterProductAsync(productEntity);
-            await RegisterAndPersistEvent("ProductRegistered", productId, registerProduct);
+            var productPrice = new ProductObjectPrice(registerProduct.Price);            
+            var productCategory = new ProductObjectCategory(registerProduct.Category);
+            var productEntity = new ProductEntity(productName, productDescription, productPrice, productCategory, registerProduct.BranchId);
 
-            return productId;
+            var productResponse = await _productRepository.RegisterProductAsync(productEntity);
+            await RegisterAndPersistEvent("ProductRegistered", productResponse.BranchId, registerProduct);
 
+            return registerProduct;           
+           
         }
 
-        public async Task<string> RegisterProductInventoryAsync(RegisterProductInventoryCommand registerProductInventoryCommand)
+        public async Task<ProductResponse> RegisterProductInventoryAsync(Guid productId, RegisterProductInventoryCommand registerProductInventoryCommand)
         {
+            var quantity = new ProductObjectInventoryStock(registerProductInventoryCommand.Quantity);
 
-            var productInventoryEntity = new RegisterProductInventoryCommand(registerProductInventoryCommand.Id, registerProductInventoryCommand.Quantity);
-                    
-            var productInventoryId = await _productRepository.RegisterProductInventoryAsync(productInventoryEntity);
+            var productResponse = await _productRepository.RegisterProductInventoryAsync(quantity, productId);
 
-            await RegisterAndPersistEvent("ProductInventoryRegistered", productInventoryId, null);
+            var eventStockResgitered = new RegisterEvent("ProductStockRegistered", registerProductInventoryCommand.Quantity, productResponse.InventoryStock, productId, productResponse.BranchId);
 
-            return productInventoryId;                       
-            
+            await RegisterAndPersistEvent("ProductStockRegistered", productResponse.BranchId, eventStockResgitered);
+
+            return productResponse;
         }
 
-        public async Task<string> RegisterProductSaleAsync(RegisterProductSaleCommand productSaleCommand)
+        public async Task<ProductResponse> registerFinalCustomerSaleAsync(Guid productId, RegisterProductSaleCommand registerProductSaleCommand)
         {
-            var productSaleEntity = new RegisterProductSaleCommand(productSaleCommand.Id, productSaleCommand.Quantity);
+            var quantity = new ProductObjectInventoryStock(registerProductSaleCommand.Quantity);
 
-            var productSaleId = await _productRepository.RegisterProductSaleAsync(productSaleEntity);
+            var productResponse = await _productRepository.RegisterProductFinalCustomerSaleAsync(quantity, productId);
 
-            await RegisterAndPersistEvent("ProductSaleRegistered", productSaleId, null);
+            var eventSaleResgitered = new RegisterSaleEvent("ProductSaleRegistered", registerProductSaleCommand.Quantity, productId, productResponse.BranchId);
 
-            return productSaleId;
+            var discount = productResponse.Price * 0.15;
+
+            eventSaleResgitered.TotalPrice = (productResponse.Price - discount) * registerProductSaleCommand.Quantity;
+
+            await RegisterAndPersistEvent("ProductSaleRegistered", productResponse.BranchId, eventSaleResgitered);
+
+            return productResponse;
         }
 
-        public async Task<string> RegisterSaleAsync(RegisterSaleCommand registerSaleCommand)
+        public async Task<ProductResponse> registerResellerSaleAsync(Guid productId, RegisterProductSaleCommand registerProductSaleCommand)
         {
-            var saleEntity = new RegisterSaleCommand (registerSaleCommand.Products);
+            var quantity = new ProductObjectInventoryStock(registerProductSaleCommand.Quantity);
 
-            var saleId = await _productRepository.RegisterSaleAsync(saleEntity);
+            var productResponse = await _productRepository.RegisterProductResellerSaleAsync(quantity, productId);
 
-            await RegisterAndPersistEvent("SaleRegistered", saleId, null);
+            var eventSaleResgitered = new RegisterSaleEvent("ProductSaleRegistered", registerProductSaleCommand.Quantity, productId, productResponse.BranchId);
 
-            return saleId;
+            var discount = productResponse.Price * 0.05;
+
+            eventSaleResgitered.TotalPrice = (productResponse.Price - discount) * registerProductSaleCommand.Quantity;
+
+            await RegisterAndPersistEvent("ProductRessellerSaleRegistered", productResponse.BranchId, eventSaleResgitered);
+
+            return productResponse;
         }
 
-        public async Task RegisterAndPersistEvent(string eventName, int aggregateId, RegisterProductCommand eventBody)
+        public async Task RegisterAndPersistEvent(string eventName, Guid aggregateId, Object eventBody)
         {
             var storedEvent = new StoredEventEntity(eventName, aggregateId, JsonConvert.SerializeObject(eventBody));
 
             await _storedEvent.RegisterEvent(storedEvent);
-        }     
-
-
-
+        }
+      
     }
 }

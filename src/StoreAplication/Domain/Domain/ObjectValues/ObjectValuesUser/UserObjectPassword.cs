@@ -10,9 +10,9 @@ namespace Domain.ObjectValues.ObjectValuesUser
     {
         public string Password { get; set; }
 
-        public UserObjectPassword(string Password)
+        public UserObjectPassword(string password)
         {
-            Password = Password;
+            Password = password;
         }
     }
 }

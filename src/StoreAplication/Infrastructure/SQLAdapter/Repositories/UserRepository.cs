@@ -4,6 +4,7 @@ using Domain.Commands.User;
 using Domain.Entities;
 using Domain.ObjectValues;
 using Infrastructure.DTO;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,22 +24,25 @@ namespace Infrastructure.SQLAdapter.Repositories
             
         }
 
-        public async Task<int> RegisterUserAsync(UserEntity userEntity)
+        public async Task<UserEntity> RegisterUserAsync(UserEntity userEntity)
         {
 
             var userToCreate = new RegisterUserDTO(
 
-                userEntity.Name.Name,
-                userEntity.Name.LastName,
+                $"{userEntity.Name.Name} {userEntity.Name.LastName}",
                 userEntity.Password.Password,
                 userEntity.Email.Email,
-                userEntity.Role.ToString(),
+                userEntity.Role.Role,
                 userEntity.BranchId);
 
             _dbConnectionBuilder.Add(userToCreate);
             await _dbConnectionBuilder.SaveChangesAsync();
 
-            return userToCreate.Id;
+            userEntity.UserId = userToCreate.UserId;
+
+            return userEntity;
+           
+
         }
     }
 }

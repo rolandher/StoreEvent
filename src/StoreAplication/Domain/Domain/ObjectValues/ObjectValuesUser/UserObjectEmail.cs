@@ -10,9 +10,9 @@ namespace Domain.ObjectValues.ObjectValuesUser
     {
         public string Email { get; set; }
 
-        public UserObjectEmail(string Email)
+        public UserObjectEmail(string email)
         {
-            Email = Email;
+            Email = email;
         }
     }
 }

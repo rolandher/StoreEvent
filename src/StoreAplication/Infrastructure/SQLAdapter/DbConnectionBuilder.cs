@@ -17,9 +17,9 @@ namespace Infrastructure.SQLAdapter
         {
         }
 
-        public DbSet<RegisterBranchDTO> BranchEntity { get; set; }
-        public DbSet<RegisterProductDTO> ProductEntity { get; set; }
-        public DbSet<RegisterUserDTO> UserEntity { get; set; }
+        public DbSet<RegisterBranchDTO> Branch { get; set; }
+        public DbSet<RegisterProductDTO> Product { get; set; }
+        public DbSet<RegisterUserDTO> User { get; set; }
 
 
     }

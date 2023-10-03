@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Domain.Commands.User;
 using Domain.Entities;
+using Domain.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
 
 namespace StoreAplication.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/user/register")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -20,9 +21,9 @@ namespace StoreAplication.Controllers
         }
         
         [HttpPost]
-        public async Task<int> RegisterUserAsync([FromBody] RegisterUserCommand registerUserCommand)
+        public async Task<UserResponse> RegisterUserAsync([FromBody] RegisterUserCommand registerUserCommand)
         {
-            return await _userUseCase.RegisterUserAsync(registerUserCommand);
+            return await _userUseCase.RegisterUserAsync(registerUserCommand);            
         }
 
 

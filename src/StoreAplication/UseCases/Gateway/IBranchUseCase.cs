@@ -1,5 +1,6 @@
 ﻿using Domain.Commands.Branch;
 using Domain.Entities;
+using Domain.Response.Branch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace UseCases.Gateway
 {
     public interface IBranchUseCase
     {
-      Task<int> RegisterBranchAsync(RegisterBranchCommand registerBranch);
+      Task<BranchResponse> RegisterBranchAsync(RegisterBranchCommand registerBranch);
     }
 }

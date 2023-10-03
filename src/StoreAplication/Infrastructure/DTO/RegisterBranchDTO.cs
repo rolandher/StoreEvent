@@ -12,27 +12,24 @@ namespace Infrastructure.DTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid BranchId { get; set; }
 
-        [Required] public string BranchName { get; set; }
+        [Required] public string Name { get; set; }
 
-        [Required] public string BranchCountry { get; set; }
+        [Required] public string Country { get; set; }
 
-        [Required] public string BranchCity { get; set; }
+        [Required] public string City { get; set; }
 
         public virtual List<RegisterProductDTO> BranchUsers { get; set; }
 
         public virtual List<RegisterUserDTO> BranchProducts { get; set; }
 
-        public RegisterBranchDTO(string branchName, string branchCountry, string branchCity)
+        public RegisterBranchDTO(string name, string country, string city)
         {
-            BranchName = branchName;
-            BranchCountry = branchCountry;
-            BranchCity = branchCity;
+            Name = name;
+            Country = country;
+            City = city;
         }
-
-        public RegisterBranchDTO()
-        {
-        }
+       
     }
 }

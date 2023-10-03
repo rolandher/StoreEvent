@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesBranch;
+using Domain.Response.Branch;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,26 +25,33 @@ namespace UseCases.UseCases
             _storedEvent = storedEvent;
         }
 
-        public async Task<int> RegisterBranchAsync(RegisterBranchCommand registerBranch)
+        public async Task<BranchResponse> RegisterBranchAsync(RegisterBranchCommand registerBranch)
         {
             var branchName = new BranchObjectName(registerBranch.Name);
-            var branchLocation = new BranchObjectLocation(registerBranch.Country, registerBranch.City);
+            var branchLocation = new BranchObjectLocation(registerBranch.Location.City, registerBranch.Location.Country);
             var branchEntity = new BranchEntity(branchName, branchLocation);
-            var branchId = await _branchRepository.RegisterBranchAsync(branchEntity);
 
-            
-            await RegisterAndPersistEvent("BranchRegisteredEvent", branchId, registerBranch);
+            var branchResponse = await _branchRepository.RegisterBranchAsync(branchEntity);
 
-            return branchId;
-                        
+            var responseB = new BranchResponse();
+
+            responseB.Name = registerBranch.Name;
+            responseB.Location = $"{branchResponse.Location.City}, {branchResponse.Location.Country}";
+            responseB.BranchId = branchResponse.BranchId;
+
+            await RegisterAndPersistEvent("BranchRegisteredEvent", branchResponse.BranchId, registerBranch);
+
+            return responseB;                  
+
         }
 
-        public async Task RegisterAndPersistEvent(string eventName, int aggregateId, RegisterBranchCommand eventBody)
+        public async Task RegisterAndPersistEvent(string eventName, Guid aggregateId, RegisterBranchCommand eventBody)
         {
             var storedEvent = new StoredEventEntity(eventName, aggregateId, JsonConvert.SerializeObject(eventBody));
 
             await _storedEvent.RegisterEvent(storedEvent);
         }
+       
     }
 }
 

@@ -2,7 +2,9 @@
 using Adapter;
 using Adapter.Common;
 using Adapter.Interfaces;
+using Adapter.Repositories;
 using AutoMapper.Data;
+using Infrastructure.ConfigurationProfileSql;
 using Infrastructure.SQLAdapter;
 using Infrastructure.SQLAdapter.Repositories;
 using Microsoft.AspNetCore.Connections;
@@ -42,7 +44,12 @@ builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();
 
 builder.Services.AddControllers();
 
-builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(MappingProfileMongo));
+builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ProfileMongo));
+builder.Services.AddAutoMapper(config =>
+{
+    config.AddProfile<ProfileSql>();
+    config.AddProfile<ProfileMongo>();
+});
 builder.Services.AddSingleton<IContextMongo>(provider => new ContextMongo(builder.Configuration.GetConnectionString("MongoConnection"), "Events"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -54,6 +61,13 @@ builder.Services.AddDbContext<DbConnectionBuilder>(options =>
 );
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DbConnectionBuilder>();
+    context.Database.Migrate();
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

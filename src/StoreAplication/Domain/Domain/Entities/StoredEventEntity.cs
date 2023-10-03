@@ -9,7 +9,7 @@ namespace Domain.Entities
     public class StoredEventEntity
     {
         public string StoredName { get; set; }
-        public int AggregateId { get; set; }
+        public Guid AggregateId { get; set; }
 
         public string EventBody { get; set; }
 
@@ -17,7 +17,7 @@ namespace Domain.Entities
         {
 
         }
-        public StoredEventEntity(string storedName, int aggregateId, string eventBody)
+        public StoredEventEntity(string storedName, Guid aggregateId, string eventBody)
         {
             StoredName = storedName;
             AggregateId = aggregateId;

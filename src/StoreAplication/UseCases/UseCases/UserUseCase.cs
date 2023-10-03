@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesUser;
+using Domain.Response.User;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,22 +25,31 @@ namespace UseCases.UseCases
             _userRepository = userRepository;
             _storedEvent = storedEvent;
         }
-        public async Task<int> RegisterUserAsync(RegisterUserCommand registerUser)
+        public async Task<UserResponse> RegisterUserAsync(RegisterUserCommand registerUser)
         {
-            var userName = new UserObjectName(registerUser.Name, registerUser.LastName);
+            var userName = new UserObjectName(registerUser.Name.Name, registerUser.Name.LastName);
             var userPassword = new UserObjectPassword(registerUser.Password);
-            var userEmail = new UserObjectEmail(registerUser.Email);           
-            var userEntity = new UserEntity(userName, userPassword, userEmail, 
-                (UserObjectRole)Enum.Parse(typeof(UserObjectRole), registerUser.Role), registerUser.BranchId);
-           
+            var userEmail = new UserObjectEmail(registerUser.Email);  
+            var userRole = new UserObjectRole(registerUser.Role);
+            var userEntity = new UserEntity(userName, userPassword, userEmail, userRole, registerUser.BranchId);
 
-            var userId = await _userRepository.RegisterUserAsync(userEntity);
+            var userResponse = await _userRepository.RegisterUserAsync(userEntity);
+            var responseU = new UserResponse();
 
-            await RegisterAndPersistEvent("UserRegisteredEvent", userId, registerUser);
-            return userId;
-        }            
+            responseU.Name = $"{registerUser.Name.Name} {registerUser.Name.LastName}";
+            responseU.Email = registerUser.Email;
+            responseU.Password = registerUser.Password;
+            responseU.Role = registerUser.Role;
+            responseU.BranchId = registerUser.BranchId;
+            responseU.UserId = userResponse.UserId;
 
-        public async Task RegisterAndPersistEvent(string eventName, int aggregateId, RegisterUserCommand eventBody)
+            await RegisterAndPersistEvent("UserRegisteredEvent", userResponse.BranchId, registerUser);
+
+            return responseU;
+
+        }
+
+        public async Task RegisterAndPersistEvent(string eventName, Guid aggregateId, RegisterUserCommand eventBody)
         {
             var storedEvent = new StoredEventEntity(eventName, aggregateId, JsonConvert.SerializeObject(eventBody));
 

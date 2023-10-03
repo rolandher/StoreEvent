@@ -15,14 +15,11 @@ namespace Infrastructure.DTO
     public class RegisterUserDTO
     {
 
-        [Key]
-        [Required]
+        [Key]        
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public Guid UserId { get; set; }
         
-        [Required] public string Name { get; set; }
-
-        [Required] public string LastName { get; set; }
+        [Required] public string Name { get; set; }       
 
         [Required] public string Password { get; set; }
 
@@ -30,25 +27,20 @@ namespace Infrastructure.DTO
 
         [Required] public string Role { get; set; }
 
-        [Required] public string BranchId { get; set; }
+        [Required] public Guid BranchId { get; set; }
 
         [Required]
         [ForeignKey("BranchId")]
-        public virtual RegisterBranchDTO Branch { get; set; }
-
+        public virtual RegisterBranchDTO Branch { get; set; }    
         
-        public RegisterUserDTO(string name, string lastname, string password, string email, string role, string branchId)
+        public RegisterUserDTO(string name, string password, string email, string role, Guid branchId)
         {
-            Name = name;     
-            LastName = lastname;
+            Name = name;
             Password = password;
             Email = email;
             Role = role;
             BranchId = branchId;
         }
-
-        public RegisterUserDTO()
-        {
-        }
+              
     }
 }

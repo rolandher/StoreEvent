@@ -8,12 +8,13 @@ namespace Domain.ObjectValues.ObjectValuesUser
 {
     public class UserObjectRole
     {
-        public enum Role 
+        public string Role { get; set; }
+
+        public UserObjectRole(string role)
         {
-            SuperAdmin = 1,
-            Admin = 2,
-            Employee = 3
+            Role = role;
         }
-        
+
+
     }
 }
