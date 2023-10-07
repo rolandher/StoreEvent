@@ -1,8 +1,4 @@
 ﻿using AutoMapper;
-using Domain.Commands.Branch;
-using Domain.Commands.Product;
-using Domain.Commands.User;
-using Domain.Entities;
 
 namespace StoreAplication.AutoMapper
 {
@@ -10,7 +6,7 @@ namespace StoreAplication.AutoMapper
     {
         public ConfigurationProfile()
         {
-           
+
 
         }
     }

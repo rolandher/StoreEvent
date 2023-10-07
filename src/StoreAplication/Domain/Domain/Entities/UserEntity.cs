@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.ObjectValues;
+﻿using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesUser;
-using static Domain.Common.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
@@ -47,9 +41,9 @@ namespace Domain.Entities
             BranchId = branchId;
         }
 
-       
 
 
-       
+
+
     }
 }

@@ -1,11 +1,5 @@
 ﻿using Domain.ObjectValues.ObjectValuesProduct;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Domain.Common.Enums;
 
 namespace Domain.Entities
 {
@@ -37,15 +31,15 @@ namespace Domain.Entities
 
         public virtual BranchEntity BranchEntity { get; set; }
 
-        public ProductEntity( ProductObjectName name,  ProductObjectDescription description,  ProductObjectPrice price, ProductObjectCategory category, Guid branchId)
+        public ProductEntity(ProductObjectName name, ProductObjectDescription description, ProductObjectPrice price, ProductObjectCategory category, Guid branchId)
         {
             Name = name;
             Description = description;
-            Price = price;                        
+            Price = price;
             Category = category;
             BranchId = branchId;
         }
-               
+
 
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
-using WireMock.Admin.Mappings;
-
-namespace StoreAplication.Middleware
+﻿namespace StoreAplication.Middleware
 {
     public class ErrorHandleMiddleware
     {

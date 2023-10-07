@@ -4,15 +4,8 @@ using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesUser;
 using Domain.Response.User;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
-using static Domain.Common.Enums;
-using static Domain.ObjectValues.ObjectValuesUser.UserObjectRole;
 
 namespace UseCases.UseCases
 {
@@ -29,7 +22,7 @@ namespace UseCases.UseCases
         {
             var userName = new UserObjectName(registerUser.Name.Name, registerUser.Name.LastName);
             var userPassword = new UserObjectPassword(registerUser.Password);
-            var userEmail = new UserObjectEmail(registerUser.Email);  
+            var userEmail = new UserObjectEmail(registerUser.Email);
             var userRole = new UserObjectRole(registerUser.Role);
             var userEntity = new UserEntity(userName, userPassword, userEmail, userRole, registerUser.BranchId);
 
@@ -57,5 +50,5 @@ namespace UseCases.UseCases
         }
 
     }
-    
+
 }

@@ -4,11 +4,6 @@ using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesBranch;
 using Domain.Response.Branch;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
 
@@ -41,7 +36,7 @@ namespace UseCases.UseCases
 
             await RegisterAndPersistEvent("BranchRegisteredEvent", branchResponse.BranchId, registerBranch);
 
-            return responseB;                  
+            return responseB;
 
         }
 
@@ -51,7 +46,7 @@ namespace UseCases.UseCases
 
             await _storedEvent.RegisterEvent(storedEvent);
         }
-       
+
     }
 }
 

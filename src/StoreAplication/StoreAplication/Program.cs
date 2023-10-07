@@ -7,10 +7,7 @@ using AutoMapper.Data;
 using Infrastructure.ConfigurationProfileSql;
 using Infrastructure.SQLAdapter;
 using Infrastructure.SQLAdapter.Repositories;
-using Microsoft.AspNetCore.Connections;
 using Microsoft.EntityFrameworkCore;
-using StoreAplication.AutoMapper;
-using StoreAplication.Middleware;
 using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
 using UseCases.UseCases;
@@ -39,6 +36,9 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<IBranchUseCase, BranchUseCase>();
 builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+
+builder.Services.AddScoped<ISalesUseCase, SalesUseCase>();
+builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 
 builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();
 

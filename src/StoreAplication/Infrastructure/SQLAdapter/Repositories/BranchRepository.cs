@@ -1,14 +1,5 @@
-﻿using AutoMapper;
-using Dapper;
-using Domain.Commands.Branch;
-using Domain.Entities;
-using Domain.ObjectValues;
+﻿using Domain.Entities;
 using Infrastructure.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UseCases.Gateway.Repositories;
 
 namespace Infrastructure.SQLAdapter.Repositories

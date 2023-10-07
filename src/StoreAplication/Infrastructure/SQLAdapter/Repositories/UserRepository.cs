@@ -1,15 +1,7 @@
-﻿using AutoMapper;
-using Dapper;
-using Domain.Commands.User;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.ObjectValues;
+using Domain.ObjectValues.ObjectValuesUser;
 using Infrastructure.DTO;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UseCases.Gateway.Repositories;
 
 namespace Infrastructure.SQLAdapter.Repositories
@@ -17,11 +9,11 @@ namespace Infrastructure.SQLAdapter.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly DbConnectionBuilder _dbConnectionBuilder;
-        
+
         public UserRepository(DbConnectionBuilder dbConnectionBuilder)
         {
             _dbConnectionBuilder = dbConnectionBuilder;
-            
+
         }
 
         public async Task<UserEntity> RegisterUserAsync(UserEntity userEntity)
@@ -41,8 +33,29 @@ namespace Infrastructure.SQLAdapter.Repositories
             userEntity.UserId = userToCreate.UserId;
 
             return userEntity;
-           
 
+        }
+
+        public async Task<UserEntity> GetUserByIdAsync(Guid userId)
+        {
+            var user = await _dbConnectionBuilder.Users.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var userEntity = new UserEntity(
+                new UserObjectName(user.Name, user.LastName),
+                new UserObjectPassword(user.Password),
+                new UserObjectEmail(user.Email),
+                new UserObjectRole(user.Role),
+                user.BranchId
+            );
+
+            userEntity.UserId = user.UserId;
+
+            return userEntity;
         }
     }
 }

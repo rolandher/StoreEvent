@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.ObjectValues.ObjectValuesProduct;
 
 namespace Infrastructure.DTO
 {
     public class RegisterProductDTO
     {
         [Key]
-        
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
         public Guid ProductId { get; set; }
@@ -31,18 +25,18 @@ namespace Infrastructure.DTO
         [Required]
 
         [ForeignKey("BranchId")]
-        public virtual RegisterBranchDTO Branch { get; set; }    
-              
+        public virtual RegisterBranchDTO Branch { get; set; }
+
 
         public RegisterProductDTO(string name, string description, double price, string category, Guid branchId)
         {
-            
+
             Name = name;
             Description = description;
-            Price = price;            
+            Price = price;
             Category = category;
             BranchId = branchId;
-        }        
-       
+        }
+
     }
 }

@@ -1,18 +1,11 @@
-﻿using Domain.Commands.User;
+﻿using Domain.Commands.Product;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories;
-using UseCases.Gateway;
-using Domain.Commands.Product;
 using Domain.ObjectValues.ObjectValuesProduct;
-using Newtonsoft.Json;
-using Domain.ObjectValues.ObjectValuesUser;
-using Domain.Response.Product;
 using Domain.ProductEvent;
+using Domain.Response.Product;
+using Newtonsoft.Json;
+using UseCases.Gateway;
+using UseCases.Gateway.Repositories;
 
 namespace UseCases.UseCases
 {
@@ -31,15 +24,15 @@ namespace UseCases.UseCases
         {
             var productName = new ProductObjectName(registerProduct.Name);
             var productDescription = new ProductObjectDescription(registerProduct.Description);
-            var productPrice = new ProductObjectPrice(registerProduct.Price);            
+            var productPrice = new ProductObjectPrice(registerProduct.Price);
             var productCategory = new ProductObjectCategory(registerProduct.Category);
             var productEntity = new ProductEntity(productName, productDescription, productPrice, productCategory, registerProduct.BranchId);
 
             var productResponse = await _productRepository.RegisterProductAsync(productEntity);
             await RegisterAndPersistEvent("ProductRegistered", productResponse.BranchId, registerProduct);
 
-            return registerProduct;           
-           
+            return registerProduct;
+
         }
 
         public async Task<ProductResponse> RegisterProductInventoryAsync(Guid productId, RegisterProductInventoryCommand registerProductInventoryCommand)
@@ -95,6 +88,6 @@ namespace UseCases.UseCases
 
             await _storedEvent.RegisterEvent(storedEvent);
         }
-      
+
     }
 }

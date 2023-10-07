@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using Domain.Commands.Product;
-using Domain.Entities;
+﻿using Domain.Commands.Product;
 using Domain.Response.Product;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
-using UseCases.UseCases;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace StoreAplication.Controllers
 {
@@ -15,11 +11,11 @@ namespace StoreAplication.Controllers
     {
 
         private readonly IProductUseCase _productUseCase;
-        
+
         public ProductController(IProductUseCase productUseCase)
         {
             _productUseCase = productUseCase;
-            
+
         }
 
         [HttpPost("register")]
