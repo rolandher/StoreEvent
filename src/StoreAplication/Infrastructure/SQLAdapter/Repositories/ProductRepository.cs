@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Domain.Commands.Product;
 using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesProduct;
 using Domain.Response.Product;
 using Infrastructure.DTO;
+using Microsoft.EntityFrameworkCore;
 using UseCases.Gateway.Repositories;
 
 namespace Infrastructure.SQLAdapter.Repositories
@@ -28,6 +30,7 @@ namespace Infrastructure.SQLAdapter.Repositories
                 productEntity.Name.Name,
                 productEntity.Description.Description,
                 productEntity.Price.Price,
+                productEntity.InventoryStock.InventoryStock,
                 productEntity.Category.Category,
                 productEntity.BranchId
             );
@@ -57,8 +60,47 @@ namespace Infrastructure.SQLAdapter.Repositories
             return _mapper.Map<ProductResponse>(existingProduct);
         }
 
-        public async Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(ProductObjectInventoryStock product, Guid productId)
+        public async Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(RegisterProductSaleCommand registerSaleCommand)
 
+        {
+            var existingProduct = await _dbConnectionBuilder.Product.FindAsync(registerSaleCommand.ProductId);
+
+            if (existingProduct == null)
+            {
+                throw new ArgumentNullException("El producto no se encontro.");
+            }
+            if (existingProduct.InvetoryStock < registerSaleCommand.Quantity)
+            {
+                throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
+            }
+            existingProduct.InvetoryStock -= registerSaleCommand.Quantity;
+
+            await _dbConnectionBuilder.SaveChangesAsync();
+
+            return _mapper.Map<ProductResponse>(existingProduct);
+        }
+
+        public async Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand registerSale )
+        {
+            var existingProduct = await _dbConnectionBuilder.Product.FindAsync(registerSale.ProductId);
+
+            if (existingProduct == null)
+            {
+                throw new ArgumentNullException("El producto no se encontro.");
+            }
+            if (existingProduct.InvetoryStock < registerSale.Quantity)
+            {
+                throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
+            }
+
+            existingProduct.InvetoryStock -= registerSale.Quantity;
+
+            await _dbConnectionBuilder.SaveChangesAsync();
+
+            return _mapper.Map<ProductResponse>(existingProduct);
+        }
+
+        public async Task<ProductResponse> GetProductById(Guid productId)
         {
             var existingProduct = await _dbConnectionBuilder.Product.FindAsync(productId);
 
@@ -67,29 +109,9 @@ namespace Infrastructure.SQLAdapter.Repositories
                 throw new ArgumentNullException("El producto no se encontro.");
             }
 
-            existingProduct.InvetoryStock -= product.InventoryStock;
-
-            await _dbConnectionBuilder.SaveChangesAsync();
-
             return _mapper.Map<ProductResponse>(existingProduct);
         }
-
-        public async Task<ProductResponse> RegisterProductResellerSaleAsync(ProductObjectInventoryStock product, Guid productId)
-        {
-            var existingProduct = await _dbConnectionBuilder.Product.FindAsync(productId);
-
-            if (existingProduct == null)
-            {
-                throw new ArgumentNullException("El producto no se encontro.");
-            }
-
-            existingProduct.InvetoryStock -= product.InventoryStock;
-
-            await _dbConnectionBuilder.SaveChangesAsync();
-
-            return _mapper.Map<ProductResponse>(existingProduct);
-        }
-
+      
     }
 
 

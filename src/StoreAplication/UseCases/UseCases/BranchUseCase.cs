@@ -9,42 +9,42 @@ using UseCases.Gateway.Repositories;
 
 namespace UseCases.UseCases
 {
-    public class BranchUseCase : IBranchUseCase
+    public class BranchUseCase
     {
 
-        private readonly IBranchRepository _branchRepository;
         private readonly IStoredEventRepository _storedEvent;
-        public BranchUseCase(IBranchRepository branchRepository, IStoredEventRepository storedEvent)
+        private readonly IPublishEventRepository _publishEventRepository;
+              
+        public BranchUseCase(IStoredEventRepository storedEvent, IPublishEventRepository publishEventRepository)
         {
-            _branchRepository = branchRepository;
             _storedEvent = storedEvent;
+            _publishEventRepository = publishEventRepository;
         }
 
         public async Task<BranchResponse> RegisterBranchAsync(RegisterBranchCommand registerBranch)
         {
             var branchName = new BranchObjectName(registerBranch.Name);
             var branchLocation = new BranchObjectLocation(registerBranch.Location.City, registerBranch.Location.Country);
-            var branchEntity = new BranchEntity(branchName, branchLocation);
-
-            var branchResponse = await _branchRepository.RegisterBranchAsync(branchEntity);
+            var branchEntity = new BranchEntity(branchName, branchLocation);           
 
             var responseB = new BranchResponse();
 
             responseB.Name = registerBranch.Name;
-            responseB.Location = $"{branchResponse.Location.City}, {branchResponse.Location.Country}";
-            responseB.BranchId = branchResponse.BranchId;
+            responseB.Location = $"{branchEntity.Location.City}, {branchEntity.Location.Country}";
+            responseB.BranchId = branchEntity.BranchId;
 
-            await RegisterAndPersistEvent("BranchRegisteredEvent", branchResponse.BranchId, registerBranch);
+            var eventResponse = await RegisterAndPersistEvent("BranchRegistered", branchEntity.BranchId, branchEntity);
+
+            _publishEventRepository.PublishRegisterBranchEvent(eventResponse);
 
             return responseB;
-
         }
 
-        public async Task RegisterAndPersistEvent(string eventName, Guid aggregateId, RegisterBranchCommand eventBody)
+        public async Task<StoredEventEntity> RegisterAndPersistEvent(string eventName, Guid aggregateId, Object eventBody)
         {
             var storedEvent = new StoredEventEntity(eventName, aggregateId, JsonConvert.SerializeObject(eventBody));
-
             await _storedEvent.RegisterEvent(storedEvent);
+            return storedEvent;
         }
 
     }

@@ -15,12 +15,11 @@ namespace Domain.Entities
 
         [Required] public SalesObjectTotal Total { get; set; }
 
-        [Required] public Guid BranchId { get; set; }
-
-        public virtual BranchEntity BranchEntity { get; set; }
+        [Required] public Guid BranchId { get; set; }        
 
         public SalesEntity(SalesObjectNumber number, SalesObjectQuantity quantity, SalesObjectType type, SalesObjectTotal total, Guid branchId)
         {
+            SalesId = Guid.NewGuid();
             Number = number;
             Quantity = quantity;
             Type = type;

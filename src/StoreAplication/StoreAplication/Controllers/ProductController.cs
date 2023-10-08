@@ -1,7 +1,10 @@
 ﻿using Domain.Commands.Product;
+using Domain.Commands.Sales;
 using Domain.Response.Product;
+using Domain.Response.Sale;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
+using UseCases.UseCases;
 
 namespace StoreAplication.Controllers
 {
@@ -10,13 +13,13 @@ namespace StoreAplication.Controllers
     public class ProductController : ControllerBase
     {
 
-        private readonly IProductUseCase _productUseCase;
+        private readonly ProductUseCase _productUseCase;
 
-        public ProductController(IProductUseCase productUseCase)
+        public ProductController(ProductUseCase productUseCase)
         {
             _productUseCase = productUseCase;
-
         }
+
 
         [HttpPost("register")]
         public async Task<RegisterProductCommand> RegisterProductAsync([FromBody] RegisterProductCommand registerProductCommand)
@@ -31,15 +34,15 @@ namespace StoreAplication.Controllers
         }
 
         [HttpPatch("api/v1/product/customer-sale")]
-        public async Task<ProductResponse> registerFinalCustomerSaleAsync(Guid productId, [FromBody] RegisterProductSaleCommand registerProductSaleCommand)
+        public async Task<SaleResponse> RegisterFinalCustomerSaleAsync([FromBody] RegisterSaleCommand registerSaleCommand)
         {
-            return await _productUseCase.registerFinalCustomerSaleAsync(productId, registerProductSaleCommand);
+            return await _productUseCase.RegisterProductFinalCustomerSaleAsync(registerSaleCommand);
         }
 
         [HttpPatch("api/v1/product/reseller-sale")]
-        public async Task<ProductResponse> registerResellerSaleAsync(Guid productId, [FromBody] RegisterProductSaleCommand registerProductSaleCommand)
+        public async Task<SaleResponse> RegisterResellerSaleAsync([FromBody] RegisterSaleCommand registerSaleCommand)
         {
-            return await _productUseCase.registerResellerSaleAsync(productId, registerProductSaleCommand);
+            return await _productUseCase.RegisterProductResellerSaleAsync(registerSaleCommand);
         }
 
     }

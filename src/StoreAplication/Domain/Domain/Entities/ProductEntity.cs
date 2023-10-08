@@ -27,15 +27,15 @@ namespace Domain.Entities
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 100 caracteres.")]
         public ProductObjectCategory Category { get; set; }
 
-        [Required] public Guid BranchId { get; set; }
+        [Required] public Guid BranchId { get; set; }        
 
-        public virtual BranchEntity BranchEntity { get; set; }
-
-        public ProductEntity(ProductObjectName name, ProductObjectDescription description, ProductObjectPrice price, ProductObjectCategory category, Guid branchId)
+        public ProductEntity(ProductObjectName name, ProductObjectDescription description, ProductObjectPrice price, ProductObjectInventoryStock inventoryStock, ProductObjectCategory category, Guid branchId)
         {
+            ProductId = Guid.NewGuid();
             Name = name;
             Description = description;
             Price = price;
+            InventoryStock = inventoryStock;
             Category = category;
             BranchId = branchId;
         }

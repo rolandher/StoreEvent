@@ -3,6 +3,7 @@ using Adapter;
 using Adapter.Common;
 using Adapter.Interfaces;
 using Adapter.Repositories;
+using AdapterRabbitProducer.Producer;
 using AutoMapper.Data;
 using Infrastructure.ConfigurationProfileSql;
 using Infrastructure.SQLAdapter;
@@ -28,19 +29,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddScoped<IUserUseCase, UserUseCase>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-builder.Services.AddScoped<IProductUseCase, ProductUseCase>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-builder.Services.AddScoped<IBranchUseCase, BranchUseCase>();
+builder.Services.AddTransient<BranchUseCase>();
 builder.Services.AddScoped<IBranchRepository, BranchRepository>();
 
-builder.Services.AddScoped<ISalesUseCase, SalesUseCase>();
+builder.Services.AddTransient<ProductUseCase>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddTransient<UserUseCase>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 
 builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();
+builder.Services.AddScoped<IPublishEventRepository, ProducerEvent>();
 
 builder.Services.AddControllers();
 

@@ -2,6 +2,7 @@
 using Domain.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
+using UseCases.UseCases;
 
 namespace StoreAplication.Controllers
 {
@@ -10,18 +11,18 @@ namespace StoreAplication.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly IUserUseCase _userUseCase;
+        private readonly UserUseCase _userUseCase;
 
-        public UserController(IUserUseCase userUseCase)
+        public UserController(UserUseCase userUseCase)
         {
             _userUseCase = userUseCase;
-
         }
 
-        [HttpPost]
-        public async Task<UserResponse> RegisterUserAsync([FromBody] RegisterUserCommand registerUserCommand)
+        [HttpPost("register")]
+        public async Task<UserResponse> RegisterUserAsync([FromBody] RegisterUserCommand registerUser)
         {
-            return await _userUseCase.RegisterUserAsync(registerUserCommand);
+            return await _userUseCase.RegisterUserAsync(registerUser);
+            
         }
 
     }

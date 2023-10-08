@@ -35,28 +35,7 @@ namespace Infrastructure.SQLAdapter.Repositories
             return userEntity;
 
         }
-
-        public async Task<UserEntity> GetUserByIdAsync(Guid userId)
-        {
-            var user = await _dbConnectionBuilder.Users.FirstOrDefaultAsync(x => x.UserId == userId);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            var userEntity = new UserEntity(
-                new UserObjectName(user.Name, user.LastName),
-                new UserObjectPassword(user.Password),
-                new UserObjectEmail(user.Email),
-                new UserObjectRole(user.Role),
-                user.BranchId
-            );
-
-            userEntity.UserId = user.UserId;
-
-            return userEntity;
-        }
+       
     }
 }
 

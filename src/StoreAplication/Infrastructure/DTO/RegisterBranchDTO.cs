@@ -19,6 +19,8 @@ namespace Infrastructure.DTO
 
         public virtual List<RegisterUserDTO> BranchProducts { get; set; }
 
+        public virtual List<RegisterSalesDTO> BranchSales { get; set; }
+
         public RegisterBranchDTO(string name, string country, string city)
         {
             Name = name;

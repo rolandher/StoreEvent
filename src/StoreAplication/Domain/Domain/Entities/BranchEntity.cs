@@ -14,16 +14,17 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "La localidad es obligatoria.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 100 caracteres.")]
-        public BranchObjectLocation Location { get; set; }
-
-        public virtual List<UserEntity> UserEntities { get; set; }
-
-        public virtual List<ProductEntity> ProductEntities { get; set; }
+        public BranchObjectLocation Location { get; set; }      
 
         public BranchEntity(BranchObjectName name, BranchObjectLocation location)
         {
+            BranchId = Guid.NewGuid();
             Name = name;
             Location = location;
+        }
+
+        public BranchEntity()
+        {
         }
     }
 }

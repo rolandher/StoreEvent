@@ -1,25 +1,29 @@
 ﻿using Domain.Commands.User;
 using Domain.Entities;
-using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesUser;
+using Domain.ObjectValues;
 using Domain.Response.User;
 using Newtonsoft.Json;
-using UseCases.Gateway;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using UseCases.Gateway.Repositories;
 
-namespace UseCases.UseCases
+namespace UseCasesQuery.QueryUseCase
 {
-    public class UserUseCase 
+    public class QUserUseCase 
     {
-        
-        private readonly IStoredEventRepository _storedEvent;
-        private readonly IPublishEventRepository _publishEventRepository;
 
-        public UserUseCase(IStoredEventRepository storedEvent, IPublishEventRepository publishEventRepository)
-        {            
+        private readonly IUserRepository _userRepository;
+        private readonly IStoredEventRepository _storedEvent;
+        public QUserUseCase(IUserRepository userRepository, IStoredEventRepository storedEvent)
+        {
+            _userRepository = userRepository;
             _storedEvent = storedEvent;
-            _publishEventRepository = publishEventRepository;
         }
+
         public async Task<UserResponse> RegisterUserAsync(RegisterUserCommand registerUser)
         {
             var userName = new UserObjectName(registerUser.Name.Name, registerUser.Name.LastName);
@@ -28,6 +32,7 @@ namespace UseCases.UseCases
             var userRole = new UserObjectRole(registerUser.Role);
             var userEntity = new UserEntity(userName, userPassword, userEmail, userRole, registerUser.BranchId);
 
+            var userResponse = await _userRepository.RegisterUserAsync(userEntity);
             var responseU = new UserResponse();
 
             responseU.Name = $"{registerUser.Name.Name} {registerUser.Name.LastName}";
@@ -37,9 +42,7 @@ namespace UseCases.UseCases
             responseU.BranchId = registerUser.BranchId;
             responseU.UserId = userEntity.UserId;
 
-            var eventResponse = await RegisterAndPersistEvent("UserRegistered", userEntity.BranchId, registerUser);
-
-            _publishEventRepository.PublishRegisterUser(eventResponse);
+            var eventResponse = await RegisterAndPersistEvent("UserRegistered", userEntity.BranchId, registerUser);                       
 
             return responseU;
 
@@ -52,6 +55,8 @@ namespace UseCases.UseCases
             return storedEvent;
         }
 
-    }
 
+
+
+    }
 }

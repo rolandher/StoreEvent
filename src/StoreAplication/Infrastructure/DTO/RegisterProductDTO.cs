@@ -28,12 +28,13 @@ namespace Infrastructure.DTO
         public virtual RegisterBranchDTO Branch { get; set; }
 
 
-        public RegisterProductDTO(string name, string description, double price, string category, Guid branchId)
+        public RegisterProductDTO(string name, string description, double price, int inventoryStock, string category, Guid branchId)
         {
 
             Name = name;
             Description = description;
             Price = price;
+            InvetoryStock = inventoryStock;
             Category = category;
             BranchId = branchId;
         }

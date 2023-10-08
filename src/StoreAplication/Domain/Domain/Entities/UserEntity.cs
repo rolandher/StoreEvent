@@ -34,16 +34,13 @@ namespace Domain.Entities
 
         public UserEntity(UserObjectName name, UserObjectPassword password, UserObjectEmail email, UserObjectRole role, Guid branchId)
         {
+            UserId = Guid.NewGuid();
             Name = name;
             Password = password;
             Email = email;
             Role = role;
             BranchId = branchId;
         }
-
-
-
-
 
     }
 }

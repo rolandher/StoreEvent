@@ -15,7 +15,7 @@ namespace Infrastructure.DTO
 
         [Required] public int Quantity { get; set; }
 
-        [Required] public int Total { get; set; }
+        [Required] public double Total { get; set; }
 
         [Required] public Guid BranchId { get; set; }
 
@@ -23,7 +23,7 @@ namespace Infrastructure.DTO
         [ForeignKey("BranchId")]
         public virtual RegisterBranchDTO Branch { get; set; }
 
-        public RegisterSalesDTO(string type, int number, int quantity, int total, Guid branchId)
+        public RegisterSalesDTO(string type, int number, int quantity, double total, Guid branchId)
         {
             Type = type;
             Number = number;

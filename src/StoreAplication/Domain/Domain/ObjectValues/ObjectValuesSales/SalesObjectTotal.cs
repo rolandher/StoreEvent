@@ -2,9 +2,9 @@
 {
     public class SalesObjectTotal
     {
-        public int Total { get; set; }
+        public double Total { get; set; }
 
-        public SalesObjectTotal(int total)
+        public SalesObjectTotal(double total)
         {
             Total = total;
         }

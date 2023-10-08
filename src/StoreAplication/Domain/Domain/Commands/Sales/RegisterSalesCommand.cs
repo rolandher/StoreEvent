@@ -10,7 +10,7 @@ namespace Domain.Commands.Sales
 
         [Required] public int Quantity { get; set; }
 
-        [Required] public int Total { get; set; }
+        [Required] public double Total { get; set; }
 
         [Required] public Guid BranchId { get; set; }
     }
