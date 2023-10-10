@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UseCases.Gateway.Repositories;
+using UseCases.Gateway.Repositories.BranchRepository;
 
-namespace UseCasesQuery.QueryBranchUseCase
+namespace UseCasesQuery.QuerysUseCase.QueryBranchUseCase
 {
     public class QBranchGetIdUseCase
     {
@@ -19,7 +19,7 @@ namespace UseCasesQuery.QueryBranchUseCase
 
         public async Task<BranchQueryResponse> GetBranchIdAsync(Guid branchId)
         {
-           return await _repository.GetBranchByIdAsync(branchId);           
+            return await _repository.GetBranchByIdAsync(branchId);
         }
     }
 }

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UseCases.Gateway.Repositories.BranchRepository;
 
-namespace Domain.Factory
+namespace UseCasesQuery.Factory
 {
     public interface IBranchUseCaseQueryFactory
     {

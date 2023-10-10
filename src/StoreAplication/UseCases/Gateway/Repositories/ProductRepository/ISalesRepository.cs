@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace UseCases.Gateway.Repositories
+namespace UseCases.Gateway.Repositories.ProductRepository
 {
     public interface ISalesRepository
     {

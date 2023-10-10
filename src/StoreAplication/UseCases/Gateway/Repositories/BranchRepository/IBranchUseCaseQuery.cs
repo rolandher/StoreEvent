@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UseCases.Gateway.Repositories
+namespace UseCases.Gateway.Repositories.BranchRepository
 {
     public interface IBranchUseCaseQuery
     {

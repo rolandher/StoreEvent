@@ -7,14 +7,14 @@ using Newtonsoft.Json;
 using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
 
-namespace UseCases.UseCases
+namespace UseCases.UseCases.BranchCase
 {
     public class BranchUseCase
     {
 
         private readonly IStoredEventRepository _storedEvent;
         private readonly IPublishEventRepository _publishEventRepository;
-              
+
         public BranchUseCase(IStoredEventRepository storedEvent, IPublishEventRepository publishEventRepository)
         {
             _storedEvent = storedEvent;
@@ -25,7 +25,7 @@ namespace UseCases.UseCases
         {
             var branchName = new BranchObjectName(registerBranch.Name);
             var branchLocation = new BranchObjectLocation(registerBranch.Location.City, registerBranch.Location.Country);
-            var branchEntity = new BranchEntity(branchName, branchLocation);           
+            var branchEntity = new BranchEntity(branchName, branchLocation);
 
             var responseB = new BranchResponse();
 
@@ -40,7 +40,7 @@ namespace UseCases.UseCases
             return responseB;
         }
 
-        public async Task<StoredEventEntity> RegisterAndPersistEvent(string eventName, Guid aggregateId, Object eventBody)
+        public async Task<StoredEventEntity> RegisterAndPersistEvent(string eventName, Guid aggregateId, object eventBody)
         {
             var storedEvent = new StoredEventEntity(eventName, aggregateId, JsonConvert.SerializeObject(eventBody));
             await _storedEvent.RegisterEvent(storedEvent);

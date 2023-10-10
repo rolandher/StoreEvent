@@ -1,26 +1,48 @@
-
-
 using AdapteRabbitConsumer.Consumer;
 using AutoMapper.Data;
-using Domain.Factory;
 using Infrastructure.ConfigurationProfileSql;
 using Infrastructure.SQLAdapter;
 using Infrastructure.SQLAdapter.Repositories;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories;
+using UseCases.Gateway.Repositories.BranchRepository;
+using UseCases.Gateway.Repositories.ProductRepository;
+using UseCases.Gateway.Repositories.UserRepository;
+using UseCases.UseCases.ProductCase;
 using UseCasesQuery.Factory;
-using UseCasesQuery.QueryBranchUseCase;
+using UseCasesQuery.FactoryInter;
+using UseCasesQuery.QuerysUseCase.QueryBranchUseCase;
+using UseCasesQuery.QuerysUseCase.QueryProductUseCase;
+using UseCasesQuery.QuerysUseCase.QueryUserUseCase;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<QBranchGetIdUseCase>();
+builder.Services.AddTransient<QBranchGetAllUseCase>();
+
+builder.Services.AddTransient<QGetProductByIdUseCase>();
+builder.Services.AddTransient<QGetAllProductsUseCase>();
+
+builder.Services.AddTransient<QUserGetIdUseCase>();
+builder.Services.AddTransient<QUserGetAllUseCase>();
 
 builder.Services.AddHostedService<ConsumerEvent>();
 
 builder.Services.AddSingleton<IBranchUseCaseQueryFactory, BranchUseCaseQueryFactory>();
 builder.Services.AddScoped<IBranchUseCaseQuery, QBranchUseCase>();
 
-builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+builder.Services.AddSingleton<IProductUseCaseQueryFactory, ProductUseCaseQueryFactory>();
+builder.Services.AddScoped<IProductUseCaseQuery, QProductUseCase>();
+builder.Services.AddScoped<IProductInventoryStockUseCaseQuery, QInventoryStockUseCase>();
+builder.Services.AddScoped<IProductResellerSaleUseCaseQuery, QResellerSaleUseCase>();
+builder.Services.AddScoped<IProductCustomerSaleUseCaseQuery, QFinalCustomerSaleUseCase>();
+
+builder.Services.AddSingleton<IUserUserCaseQueryFactory, UserUseCaseQueryFactory>();
+builder.Services.AddScoped<IUserRegisterUseCase, QUserUseCase>();
+
+builder.Services.AddScoped<IBranchRepository, BranchRepositoryI>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 
 
 builder.Services.AddControllers();

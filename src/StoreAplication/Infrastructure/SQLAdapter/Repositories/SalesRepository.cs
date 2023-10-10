@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.DTO;
-using UseCases.Gateway.Repositories;
+using UseCases.Gateway.Repositories.ProductRepository;
 
 namespace Infrastructure.SQLAdapter.Repositories
 {
@@ -15,22 +15,24 @@ namespace Infrastructure.SQLAdapter.Repositories
 
         public async Task<SalesEntity> RegisterSaleAsync(SalesEntity saleEntity)
         {
-            var salesToCreate = new RegisterSalesDTO(
-
-                saleEntity.Type.Type,
+            using (var context = new DbConnectionBuilder())
+            {
+                var saleToCreate = new RegisterSalesDTO(
                 saleEntity.Number.Number,
                 saleEntity.Quantity.Quantity,
                 saleEntity.Total.Total,
-                saleEntity.BranchId);
+                saleEntity.Type.Type,
+                saleEntity.BranchId
+                );
+
+                context.Add(saleToCreate);
+                await context.SaveChangesAsync();
 
 
-            _dbConnectionBuilder.Add(salesToCreate);
-            await _dbConnectionBuilder.SaveChangesAsync();
+                return saleEntity;
 
-            saleEntity.SalesId = salesToCreate.SalesId;
+            }
 
-            return saleEntity;
         }
-
     }
 }

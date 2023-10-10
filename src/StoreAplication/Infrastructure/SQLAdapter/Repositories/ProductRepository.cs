@@ -5,7 +5,7 @@ using Domain.ObjectValues.ObjectValuesProduct;
 using Domain.Response.Product;
 using Infrastructure.DTO;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories;
+using UseCases.Gateway.Repositories.ProductRepository;
 
 namespace Infrastructure.SQLAdapter.Repositories
 {
@@ -25,82 +25,93 @@ namespace Infrastructure.SQLAdapter.Repositories
         public async Task<ProductEntity> RegisterProductAsync(ProductEntity productEntity)
         {
 
-            var productToCreate = new RegisterProductDTO(
-
+            using (var context = new DbConnectionBuilder())
+            {
+                var productToRegister = new RegisterProductDTO(
                 productEntity.Name.Name,
                 productEntity.Description.Description,
                 productEntity.Price.Price,
                 productEntity.InventoryStock.InventoryStock,
                 productEntity.Category.Category,
                 productEntity.BranchId
-            );
+                );
 
-            _dbConnectionBuilder.Add(productToCreate);
-            await _dbConnectionBuilder.SaveChangesAsync();
+                context.Add(productToRegister);
+                await context.SaveChangesAsync();
 
-            productEntity.ProductId = productEntity.ProductId;
-            return productEntity;
+                productEntity.ProductId = productToRegister.ProductId;
+                return productEntity;
+            }
 
         }
 
         public async Task<ProductResponse> RegisterProductInventoryAsync(ProductObjectInventoryStock product, Guid productId)
         {
 
-            var existingProduct = await _dbConnectionBuilder.Product.FindAsync(productId);
-
-            if (existingProduct == null)
+            using (var context = new DbConnectionBuilder())
             {
-                throw new ArgumentNullException("El producto no se encontro.");
+                var existingProduct = await context.Product.FindAsync(productId);
+
+                if (existingProduct == null)
+                {
+                    throw new ArgumentNullException("El producto no se encontro.");
+                }
+
+                existingProduct.InvetoryStock += product.InventoryStock;
+
+                await context.SaveChangesAsync();
+
+                return _mapper.Map<ProductResponse>(existingProduct);
             }
-
-            existingProduct.InvetoryStock += product.InventoryStock;
-
-            await _dbConnectionBuilder.SaveChangesAsync();
-
-            return _mapper.Map<ProductResponse>(existingProduct);
         }
 
         public async Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(RegisterProductSaleCommand registerSaleCommand)
 
         {
-            var existingProduct = await _dbConnectionBuilder.Product.FindAsync(registerSaleCommand.ProductId);
-
-            if (existingProduct == null)
+            using (var context = new DbConnectionBuilder())
             {
-                throw new ArgumentNullException("El producto no se encontro.");
-            }
-            if (existingProduct.InvetoryStock < registerSaleCommand.Quantity)
-            {
-                throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
-            }
-            existingProduct.InvetoryStock -= registerSaleCommand.Quantity;
+                var existingProduct = await context.Product.FindAsync(registerSaleCommand.ProductId);
 
-            await _dbConnectionBuilder.SaveChangesAsync();
+                if (existingProduct == null)
+                {
+                    throw new ArgumentNullException("El producto no se encontro.");
+                }
+                if (existingProduct.InvetoryStock < registerSaleCommand.Quantity)
+                {
+                    throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
+                }
+                existingProduct.InvetoryStock -= registerSaleCommand.Quantity;
 
-            return _mapper.Map<ProductResponse>(existingProduct);
+                await context.SaveChangesAsync();
+
+                return _mapper.Map<ProductResponse>(existingProduct);
+            }
         }
 
         public async Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand registerSale )
         {
-            var existingProduct = await _dbConnectionBuilder.Product.FindAsync(registerSale.ProductId);
-
-            if (existingProduct == null)
+            using (var context = new DbConnectionBuilder())
             {
-                throw new ArgumentNullException("El producto no se encontro.");
+                var existingProduct = await context.Product.FindAsync(registerSale.ProductId);
+
+                if (existingProduct == null)
+                {
+                    throw new ArgumentNullException("El producto no se encontro.");
+                }
+                if (existingProduct.InvetoryStock < registerSale.Quantity)
+                {
+                    throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
+                }
+
+                existingProduct.InvetoryStock -= registerSale.Quantity;
+
+                await context.SaveChangesAsync();
+
+                return _mapper.Map<ProductResponse>(existingProduct);
             }
-            if (existingProduct.InvetoryStock < registerSale.Quantity)
-            {
-                throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
-            }
-
-            existingProduct.InvetoryStock -= registerSale.Quantity;
-
-            await _dbConnectionBuilder.SaveChangesAsync();
-
-            return _mapper.Map<ProductResponse>(existingProduct);
         }
 
-        public async Task<ProductResponse> GetProductById(Guid productId)
+        public async Task<ProductResponse> GetProductByIdAsync(Guid productId)
         {
             var existingProduct = await _dbConnectionBuilder.Product.FindAsync(productId);
 
@@ -111,7 +122,15 @@ namespace Infrastructure.SQLAdapter.Repositories
 
             return _mapper.Map<ProductResponse>(existingProduct);
         }
-      
+        public async Task<List<ProductResponse>> GetAllProductAsync()
+        {
+            var products = await _dbConnectionBuilder.Product.ToListAsync();
+
+            var productResponseList = products.Select(product => _mapper.Map<ProductResponse>(product)).ToList();
+
+            return productResponseList;
+        }
+
     }
 
 

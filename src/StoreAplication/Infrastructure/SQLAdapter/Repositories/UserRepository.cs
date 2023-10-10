@@ -1,41 +1,65 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
+using Domain.Entities;
 using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesUser;
+using Domain.Response.User;
 using Infrastructure.DTO;
-using UseCases.Gateway.Repositories;
+using Microsoft.EntityFrameworkCore;
+using UseCases.Gateway.Repositories.UserRepository;
 
 namespace Infrastructure.SQLAdapter.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly DbConnectionBuilder _dbConnectionBuilder;
+        private readonly IMapper _mapper;
 
-        public UserRepository(DbConnectionBuilder dbConnectionBuilder)
+        public UserRepository(DbConnectionBuilder dbConnectionBuilder, IMapper mapper)
         {
             _dbConnectionBuilder = dbConnectionBuilder;
-
+            _mapper = mapper;   
         }
 
-        public async Task<UserEntity> RegisterUserAsync(UserEntity userEntity)
+        public async Task<UserEntity> RegisterUserAsync(UserEntity user)
         {
+            using (var context = new DbConnectionBuilder())
+            {
+                var userToRegistered = new RegisterUserDTO(
+                $"{user.Name.Name} {user.Name.LastName}",
+                user.Password.Password,
+                user.Email.Email,
+                user.Role.Role,
+                user.BranchId);
 
-            var userToCreate = new RegisterUserDTO(
+                context.Add(userToRegistered);
+                await context.SaveChangesAsync();
 
-                $"{userEntity.Name.Name} {userEntity.Name.LastName}",
-                userEntity.Password.Password,
-                userEntity.Email.Email,
-                userEntity.Role.Role,
-                userEntity.BranchId);
-
-            _dbConnectionBuilder.Add(userToCreate);
-            await _dbConnectionBuilder.SaveChangesAsync();
-
-            userEntity.UserId = userToCreate.UserId;
-
-            return userEntity;
-
+                user.UserId = userToRegistered.UserId;
+                return user;
+            }
         }
-       
+
+        public async Task<List<UserQueryResponse>> GetAllUsersAsync()
+        {
+            var users = await _dbConnectionBuilder.User.ToListAsync();
+
+            var userResponseList = users.Select(user => _mapper.Map<UserQueryResponse>(user)).ToList();
+
+            return userResponseList;
+        }
+
+        public async Task<UserQueryResponse> GetUserByIdAsync(Guid UserId)
+        {
+            var existingUser = await _dbConnectionBuilder.User.FindAsync(UserId);
+
+            if (existingUser == null)
+            {
+                throw new ArgumentNullException("El usuario no se encontro.");
+            }
+
+            return _mapper.Map<UserQueryResponse>(existingUser);
+        }
+
     }
 }
 

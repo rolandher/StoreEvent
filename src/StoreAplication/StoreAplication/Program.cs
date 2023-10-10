@@ -5,13 +5,14 @@ using Adapter.Interfaces;
 using Adapter.Repositories;
 using AdapterRabbitProducer.Producer;
 using AutoMapper.Data;
-using Infrastructure.ConfigurationProfileSql;
-using Infrastructure.SQLAdapter;
-using Infrastructure.SQLAdapter.Repositories;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
-using UseCases.UseCases;
+using UseCases.Gateway.Repositories.BranchRepository;
+using UseCases.Gateway.Repositories.ProductRepository;
+using UseCases.Gateway.Repositories.UserRepository;
+using UseCases.UseCases.BranchCase;
+using UseCases.UseCases.ProductCase;
+using UseCases.UseCases.UserCase;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,14 +31,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddTransient<BranchUseCase>();
-builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+builder.Services.AddScoped<IBranchRepository, BranchRepositoryI>();
+
 
 builder.Services.AddTransient<ProductUseCase>();
+builder.Services.AddTransient<InventoryStockUseCase>();
+builder.Services.AddTransient<FinalCustomerSaleUseCase>();
+builder.Services.AddTransient<ResellerSaleUseCase>();
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddTransient<UserUseCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-
 builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 
 builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();

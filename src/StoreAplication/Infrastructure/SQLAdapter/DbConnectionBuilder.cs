@@ -8,6 +8,10 @@ namespace Infrastructure.SQLAdapter
     {
         private readonly IConfiguration _configuration;
 
+        public DbConnectionBuilder()
+        {
+        }
+
         public DbConnectionBuilder(DbContextOptions<DbConnectionBuilder> options, IConfiguration configuration) : base(options)
         {
             _configuration = configuration;

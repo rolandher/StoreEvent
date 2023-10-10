@@ -7,16 +7,16 @@ using Newtonsoft.Json;
 using UseCases.Gateway;
 using UseCases.Gateway.Repositories;
 
-namespace UseCases.UseCases
+namespace UseCases.UseCases.UserCase
 {
-    public class UserUseCase 
+    public class UserUseCase
     {
-        
+
         private readonly IStoredEventRepository _storedEvent;
         private readonly IPublishEventRepository _publishEventRepository;
 
         public UserUseCase(IStoredEventRepository storedEvent, IPublishEventRepository publishEventRepository)
-        {            
+        {
             _storedEvent = storedEvent;
             _publishEventRepository = publishEventRepository;
         }
@@ -45,7 +45,7 @@ namespace UseCases.UseCases
 
         }
 
-        public async Task<StoredEventEntity> RegisterAndPersistEvent(string eventName, Guid aggregateId, Object eventBody)
+        public async Task<StoredEventEntity> RegisterAndPersistEvent(string eventName, Guid aggregateId, object eventBody)
         {
             var storedEvent = new StoredEventEntity(eventName, aggregateId, JsonConvert.SerializeObject(eventBody));
             await _storedEvent.RegisterEvent(storedEvent);

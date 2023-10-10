@@ -2,7 +2,7 @@
 using Domain.Response.Branch;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
-using UseCases.UseCases;
+using UseCases.UseCases.BranchCase;
 
 namespace StoreAplication.Controllers
 {

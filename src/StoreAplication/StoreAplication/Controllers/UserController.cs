@@ -2,7 +2,7 @@
 using Domain.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using UseCases.Gateway;
-using UseCases.UseCases;
+using UseCases.UseCases.UserCase;
 
 namespace StoreAplication.Controllers
 {

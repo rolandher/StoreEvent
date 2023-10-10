@@ -20,7 +20,7 @@ namespace AdapterRabbitProducer.Producer
             
             {
                 HostName = "localhost", 
-                Port = 15672,
+                Port = 5672,
                 UserName = "guest",
                 Password = "guest",
             

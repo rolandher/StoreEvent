@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Factory;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UseCasesQuery.Factory;
+using UseCasesQuery.FactoryInter;
 
 namespace AdapteRabbitConsumer.Consumer
 {
@@ -17,11 +17,17 @@ namespace AdapteRabbitConsumer.Consumer
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
-        private readonly IBranchUseCaseQueryFactory _factory;
+        private readonly IBranchUseCaseQueryFactory _factorybranch;
+        private readonly IProductUseCaseQueryFactory _factoryProduct;
+        private readonly IUserUserCaseQueryFactory _factoryUser;
 
-        public ConsumerEvent(IBranchUseCaseQueryFactory factoryBranch)
+        public ConsumerEvent(IBranchUseCaseQueryFactory factoryBranch, IProductUseCaseQueryFactory factoryProduct,
+            IUserUserCaseQueryFactory factoryUser)
         {
-            _factory = factoryBranch;
+            _factorybranch = factoryBranch;
+            _factoryProduct = factoryProduct;
+            _factoryUser = factoryUser;
+
             var factory = new ConnectionFactory()
             {
                 HostName = "localhost",
@@ -43,15 +49,16 @@ namespace AdapteRabbitConsumer.Consumer
             _channel.QueueBind("queue.branch.register", "topic_exchange", "topic.routing.branch");
             _channel.QueueBind("queue.user.register", "topic_exchange", "topic.routing.user");
             _channel.QueueBind("queue.product.register", "topic_exchange", "topic.routing.product");
-            _channel.QueueBind("queue.product.purchase", "topic_exchange", "topic.routing.product");
-            _channel.QueueBind("queue.product.customer-sale", "topic_exchange", "topic.routing.product");
-            _channel.QueueBind("queue.product.reseller-sale", "topic_exchange", "topic.routing.product");
+            _channel.QueueBind("queue.product.purchase", "topic_exchange", "topic.routing.product.purchase");
+            _channel.QueueBind("queue.product.customer-sale", "topic_exchange", "topic.routing.product.customer-sale");
+            _channel.QueueBind("queue.product.reseller-sale", "topic_exchange", "topic.routing.product.reseller-sale");
+          
 
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
-
+       
         {
-            var registerBranchUseCase = _factory.Create();
+            var registerBranchUseCase = _factorybranch.Create();
             var consumerTopic1 = new EventingBasicConsumer(_channel);
             consumerTopic1.Received += async (model, ea) =>
             {
@@ -61,71 +68,65 @@ namespace AdapteRabbitConsumer.Consumer
                 Console.WriteLine($"Recibido en Topic 1: '{message}'");
             };
 
+            var registerProductUseCase = _factoryProduct.Create();
             var consumerTopic2 = new EventingBasicConsumer(_channel);
-            consumerTopic2.Received += (model, ea) =>
+            consumerTopic2.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                await registerProductUseCase.RegisterProduct(message);
                 Console.WriteLine($"Recibido en Topic 2: '{message}'");
             };
 
+            var registerCustomerSaleProductUseCase = _factoryProduct.RegisterCustomerSale();
             var consumerTopic3 = new EventingBasicConsumer(_channel);
-            consumerTopic3.Received += (model, ea) =>
+            consumerTopic3.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                await registerCustomerSaleProductUseCase.RegisterProductFinalCustomerSale(message);
                 Console.WriteLine($"Recibido en Topic 3: '{message}'");
             };
 
+            var registerResellerSaleProductUseCase = _factoryProduct.RegisterResellerSale();
             var consumerTopic4 = new EventingBasicConsumer(_channel);
-            consumerTopic4.Received += (model, ea) =>
+            consumerTopic4.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                await registerResellerSaleProductUseCase.RegisterResellerSale(message);
                 Console.WriteLine($"Recibido en Topic 4: '{message}'");
             };
 
+            var registerProductStockUseCase = _factoryProduct.RegisterProductStock();
             var consumerTopic5 = new EventingBasicConsumer(_channel);
-            consumerTopic5.Received += (model, ea) =>
+            consumerTopic5.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                await registerProductStockUseCase.RegisterProductInventoryStock(message);
                 Console.WriteLine($"Recibido en Topic 5: '{message}'");
             };
 
+            var registerUserUseCase = _factoryUser.Create();
             var consumerTopic6 = new EventingBasicConsumer(_channel);
-            consumerTopic6.Received += (model, ea) =>
+            consumerTopic6.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                await registerUserUseCase.RegisterUserAsync(message);
                 Console.WriteLine($"Recibido en Topic 6: '{message}'");
             };
 
-            _channel.BasicConsume(queue: "queue.branch.register",
-                                     autoAck: true,
-                                     consumer: consumerTopic1);
-
-            _channel.BasicConsume(queue: "queue.product.register",
-                                     autoAck: true,
-                                     consumer: consumerTopic2);
-
-            _channel.BasicConsume(queue: "queue.product.customerSale",
-                                     autoAck: true,
-                                     consumer: consumerTopic3);
-
-            _channel.BasicConsume(queue: "queue.product.resellerSale",
-                                     autoAck: true,
-                                     consumer: consumerTopic4);
-
-            _channel.BasicConsume(queue: "queue.product.inventoryStock",
-                                     autoAck: true,
-                                     consumer: consumerTopic5);
-
-            _channel.BasicConsume(queue: "queue.user.register",
-                                     autoAck: true,
-                                     consumer: consumerTopic6);
+            _channel.BasicConsume("queue.branch.register", true, consumerTopic1);
+            _channel.BasicConsume("queue.user.register", true, consumerTopic6);
+            _channel.BasicConsume("queue.product.register", true, consumerTopic2);
+            _channel.BasicConsume("queue.product.purchase", true, consumerTopic5);
+            _channel.BasicConsume("queue.product.customer-sale", true, consumerTopic3);
+            _channel.BasicConsume("queue.product.reseller-sale", true, consumerTopic4);
 
             return Task.CompletedTask;
+
         }
 
         public override async Task StopAsync(CancellationToken cancellationToken)
