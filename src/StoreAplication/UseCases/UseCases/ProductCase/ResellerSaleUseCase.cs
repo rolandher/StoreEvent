@@ -29,10 +29,10 @@ namespace UseCases.UseCases.ProductCase
 
 
 
-        public async Task<SaleResponse> RegisterProductResellerSaleAsync(RegisterSaleCommand registerSale)
+        public async Task<SaleResponse> RegisterProductResellerSaleAsync(RegisterSaleCommand command)
         {
             double totalPrice = 0;
-            foreach (var item in registerSale.Products)
+            foreach (var item in command.Products)
             {
                 var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);
 
@@ -46,23 +46,23 @@ namespace UseCases.UseCases.ProductCase
                 totalPrice += price;
             }
 
-            var saleNumber = new SalesObjectNumber(registerSale.Number);
-            var saleQuantity = new SalesObjectQuantity(registerSale.Products.Count);
-            var saleType = new SalesObjectType("ResellerSale");
+            var saleNumber = new SalesObjectNumber(command.Number);
+            var saleQuantity = new SalesObjectQuantity(command.Products.Count);            
             var saleTotal = new SalesObjectTotal(totalPrice);
+            var saleType = new SalesObjectType("ResellerSale");
 
-            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleType, saleTotal, registerSale.BranchId);
+            var saleEntity = new SalesEntity(saleNumber, saleQuantity,saleTotal, saleType, command.BranchId);
 
             var saleResponseS = new SaleResponse();
             saleResponseS.Number = saleEntity.Number.Number;
             saleResponseS.Quantity = saleEntity.Quantity.Quantity;
-            saleResponseS.Type = saleEntity.Type.Type;
             saleResponseS.Total = saleEntity.Total.Total;
+            saleResponseS.Type = saleEntity.Type.Type;            
             saleResponseS.BranchId = saleEntity.BranchId;
             saleEntity.SalesId = saleEntity.SalesId;
 
 
-            var eventResponse = await RegisterAndPersistEvent("ProductResellerSaleRegistered", registerSale.BranchId, saleEntity);
+            var eventResponse = await RegisterAndPersistEvent("ProductResellerSaleRegistered", command.BranchId, command);
 
             _publishEventRepository.PublishRegisterProductSaleReseller(eventResponse);
             return saleResponseS;

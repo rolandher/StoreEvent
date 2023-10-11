@@ -46,7 +46,7 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             var saleTotal = new SalesObjectTotal(totalPrice);
             var saleType = new SalesObjectType("FinalCustomerSale");
 
-            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleType, saleTotal, customerSaleToCreate.BranchId);
+            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleTotal, saleType, customerSaleToCreate.BranchId);
             var saleEntityResponse = await _saleProductRepository.RegisterSaleAsync(saleEntity);
 
             var saleResponse = new SaleResponse();
@@ -54,7 +54,7 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             saleResponse.Number = saleEntityResponse.Number.Number;
             saleResponse.Quantity = saleEntityResponse.Quantity.Quantity;
             saleResponse.Total = saleEntityResponse.Total.Total;
-            saleResponse.Type = saleEntityResponse.Type.Type;
+            saleResponse.Type = saleEntityResponse.Type.Type;            
             saleResponse.SalesId = saleEntityResponse.SalesId;
 
             return saleResponse;

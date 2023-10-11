@@ -65,22 +65,22 @@ namespace Infrastructure.SQLAdapter.Repositories
             }
         }
 
-        public async Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(RegisterProductSaleCommand registerSaleCommand)
+        public async Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(RegisterProductSaleCommand command)
 
         {
             using (var context = new DbConnectionBuilder())
             {
-                var existingProduct = await context.Product.FindAsync(registerSaleCommand.ProductId);
+                var existingProduct = await context.Product.FindAsync(command.ProductId);
 
                 if (existingProduct == null)
                 {
                     throw new ArgumentNullException("El producto no se encontro.");
                 }
-                if (existingProduct.InvetoryStock < registerSaleCommand.Quantity)
+                if (existingProduct.InvetoryStock < command.Quantity)
                 {
                     throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
                 }
-                existingProduct.InvetoryStock -= registerSaleCommand.Quantity;
+                existingProduct.InvetoryStock -= command.Quantity;
 
                 await context.SaveChangesAsync();
 
@@ -88,22 +88,22 @@ namespace Infrastructure.SQLAdapter.Repositories
             }
         }
 
-        public async Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand registerSale )
+        public async Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand command )
         {
             using (var context = new DbConnectionBuilder())
             {
-                var existingProduct = await context.Product.FindAsync(registerSale.ProductId);
+                var existingProduct = await context.Product.FindAsync(command.ProductId);
 
                 if (existingProduct == null)
                 {
                     throw new ArgumentNullException("El producto no se encontro.");
                 }
-                if (existingProduct.InvetoryStock < registerSale.Quantity)
+                if (existingProduct.InvetoryStock < command.Quantity)
                 {
                     throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
                 }
 
-                existingProduct.InvetoryStock -= registerSale.Quantity;
+                existingProduct.InvetoryStock -= command.Quantity;
 
                 await context.SaveChangesAsync();
 

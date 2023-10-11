@@ -11,9 +11,9 @@ namespace Infrastructure.ConfigurationProfileSql
 
     {
         public ProfileSql()
-        {
-            CreateMap<RegisterProductDTO, ProductResponse>().ReverseMap();
+        {            
             CreateMap<RegisterBranchDTO, BranchQueryResponse>().ReverseMap();
+            CreateMap<RegisterProductDTO, ProductResponse>().ReverseMap();
             CreateMap<RegisterUserDTO, UserQueryResponse>().ReverseMap();
             CreateMap<RegisterSalesDTO, SaleResponse>().ReverseMap();
         }

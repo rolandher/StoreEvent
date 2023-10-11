@@ -6,9 +6,7 @@ namespace Infrastructure.DTO
     public class RegisterProductDTO
     {
         [Key]
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-
         public Guid ProductId { get; set; }
         [Required] public string Name { get; set; }
 
@@ -23,10 +21,8 @@ namespace Infrastructure.DTO
         [Required] public Guid BranchId { get; set; }
 
         [Required]
-
         [ForeignKey("BranchId")]
         public virtual RegisterBranchDTO Branch { get; set; }
-
 
         public RegisterProductDTO(string name, string description, double price, int inventoryStock, string category, Guid branchId)
         {
@@ -38,6 +34,13 @@ namespace Infrastructure.DTO
             Category = category;
             BranchId = branchId;
         }
+
+        public RegisterProductDTO()
+        {
+        }
+
+        
+        
 
     }
 }

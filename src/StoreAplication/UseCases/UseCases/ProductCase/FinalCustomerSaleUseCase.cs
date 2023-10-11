@@ -49,21 +49,22 @@ namespace UseCases.UseCases.ProductCase
 
             var saleNumber = new SalesObjectNumber(registerSaleCommand.Number);
             var saleQuantity = new SalesObjectQuantity(registerSaleCommand.Products.Count);
-            var saleType = new SalesObjectType("FinalCustomerSale");
             var saleTotal = new SalesObjectTotal(totalPrice);
+            var saleType = new SalesObjectType("FinalCustomerSale");
+            
 
-            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleType, saleTotal, registerSaleCommand.BranchId);
+            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleTotal, saleType, registerSaleCommand.BranchId);
 
             var saleResponse = new SaleResponse();
             saleResponse.Number = saleEntity.Number.Number;
             saleResponse.Quantity = saleEntity.Quantity.Quantity;
-            saleResponse.Type = saleEntity.Type.Type;
             saleResponse.Total = saleEntity.Total.Total;
+            saleResponse.Type = saleEntity.Type.Type;            
             saleResponse.BranchId = saleEntity.BranchId;
             saleEntity.SalesId = saleEntity.SalesId;
 
 
-            var eventResponse = await RegisterAndPersistEvent("ProductFinalCustomerSaleRegistered", registerSaleCommand.BranchId, saleEntity);
+            var eventResponse = await RegisterAndPersistEvent("ProductFinalCustomerSaleRegistered", registerSaleCommand.BranchId, registerSaleCommand);
 
             _publishEventRepository.PublishRegisterProductSaleCustomer(eventResponse);
             return saleResponse;

@@ -1,10 +1,13 @@
-//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 using Adapter;
 using Adapter.Common;
 using Adapter.Interfaces;
 using Adapter.Repositories;
 using AdapterRabbitProducer.Producer;
 using AutoMapper.Data;
+using Infrastructure.ConfigurationProfileSql;
+using Infrastructure.SQLAdapter;
+using Infrastructure.SQLAdapter.Repositories;
 using Microsoft.EntityFrameworkCore;
 using UseCases.Gateway.Repositories;
 using UseCases.Gateway.Repositories.BranchRepository;
@@ -38,7 +41,6 @@ builder.Services.AddTransient<ProductUseCase>();
 builder.Services.AddTransient<InventoryStockUseCase>();
 builder.Services.AddTransient<FinalCustomerSaleUseCase>();
 builder.Services.AddTransient<ResellerSaleUseCase>();
-
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddTransient<UserUseCase>();

@@ -46,15 +46,15 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             var saleTotal = new SalesObjectTotal(totalPrice);
             var saleType = new SalesObjectType("ResellerSale");
 
-            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleType, saleTotal, ResellerSaleToCreate.BranchId); 
+            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleTotal, saleType, ResellerSaleToCreate.BranchId); 
             var saleEntityResponse = await _saleProductRepository.RegisterSaleAsync(saleEntity);
 
             var saleResponse = new SaleResponse();
             saleResponse.BranchId = saleEntity.BranchId;
             saleResponse.Number = saleEntity.Number.Number;
-            saleResponse.Quantity = saleEntity.Quantity.Quantity;
-            saleResponse.Type = saleEntity.Type.Type;
+            saleResponse.Quantity = saleEntity.Quantity.Quantity;            
             saleResponse.Total = saleEntity.Total.Total;
+            saleResponse.Type = saleEntity.Type.Type;
             saleResponse.SalesId = saleEntityResponse.SalesId;
 
             return saleResponse;

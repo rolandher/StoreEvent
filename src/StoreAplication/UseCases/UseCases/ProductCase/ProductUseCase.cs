@@ -34,7 +34,7 @@ namespace UseCases.UseCases.ProductCase
             var productCategory = new ProductObjectCategory(registerProduct.Category);
             var productEntity = new ProductEntity(productName, productDescription, productPrice, productInventoryStock, productCategory, registerProduct.BranchId);
 
-            var eventResponse = await RegisterAndPersistEvent("ProductRegistered", productEntity.BranchId, registerProduct);
+            var eventResponse = await RegisterAndPersistEvent("ProductRegistered", productEntity.BranchId, productEntity);
 
             _publishEventRepository.PublishRegisterProduct(eventResponse);
             return registerProduct;

@@ -79,6 +79,35 @@ namespace Infrastructure.Migrations
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("Infrastructure.DTO.RegisterSalesDTO", b =>
+                {
+                    b.Property<Guid>("SalesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SalesId");
+
+                    b.HasIndex("BranchId");
+
+                    b.ToTable("Sale");
+                });
+
             modelBuilder.Entity("Infrastructure.DTO.RegisterUserDTO", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -122,6 +151,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Branch");
                 });
 
+            modelBuilder.Entity("Infrastructure.DTO.RegisterSalesDTO", b =>
+                {
+                    b.HasOne("Infrastructure.DTO.RegisterBranchDTO", "Branch")
+                        .WithMany("BranchSales")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
             modelBuilder.Entity("Infrastructure.DTO.RegisterUserDTO", b =>
                 {
                     b.HasOne("Infrastructure.DTO.RegisterBranchDTO", "Branch")
@@ -136,6 +176,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.DTO.RegisterBranchDTO", b =>
                 {
                     b.Navigation("BranchProducts");
+
+                    b.Navigation("BranchSales");
 
                     b.Navigation("BranchUsers");
                 });

@@ -30,29 +30,26 @@ namespace AdapteRabbitConsumer.Consumer
 
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",
-                Port = 5672,
-                UserName = "guest",
-                Password = "guest"
+                HostName = "localhost",               
             };
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
             _channel.ExchangeDeclare("topic_exchange", ExchangeType.Topic, true);
-            _channel.QueueDeclare("queue.branch.register", true, false, false);
-            _channel.QueueDeclare("queue.user.register", true, false, false);
+            _channel.QueueDeclare("queue.branch.register", true, false, false);            
             _channel.QueueDeclare("queue.product.register", true, false, false);
             _channel.QueueDeclare("queue.product.purchase", true, false, false);
             _channel.QueueDeclare("queue.product.customer-sale", true, false, false);
             _channel.QueueDeclare("queue.product.reseller-sale", true, false, false);
-            _channel.QueueBind("queue.branch.register", "topic_exchange", "topic.routing.branch");
-            _channel.QueueBind("queue.user.register", "topic_exchange", "topic.routing.user");
+            _channel.QueueDeclare("queue.user.register", true, false, false);
+            _channel.QueueBind("queue.branch.register", "topic_exchange", "topic.routing.branch");            
             _channel.QueueBind("queue.product.register", "topic_exchange", "topic.routing.product");
             _channel.QueueBind("queue.product.purchase", "topic_exchange", "topic.routing.product.purchase");
             _channel.QueueBind("queue.product.customer-sale", "topic_exchange", "topic.routing.product.customer-sale");
             _channel.QueueBind("queue.product.reseller-sale", "topic_exchange", "topic.routing.product.reseller-sale");
-          
+            _channel.QueueBind("queue.user.register", "topic_exchange", "topic.routing.user");
+
 
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -118,12 +115,13 @@ namespace AdapteRabbitConsumer.Consumer
                 Console.WriteLine($"Recibido en Topic 6: '{message}'");
             };
 
-            _channel.BasicConsume("queue.branch.register", true, consumerTopic1);
-            _channel.BasicConsume("queue.user.register", true, consumerTopic6);
-            _channel.BasicConsume("queue.product.register", true, consumerTopic2);
-            _channel.BasicConsume("queue.product.purchase", true, consumerTopic5);
-            _channel.BasicConsume("queue.product.customer-sale", true, consumerTopic3);
-            _channel.BasicConsume("queue.product.reseller-sale", true, consumerTopic4);
+            _channel.BasicConsume(queue:"queue.branch.register", autoAck: true, consumer: consumerTopic1);            
+            _channel.BasicConsume(queue: "queue.product.register", autoAck: true, consumer: consumerTopic2);
+            _channel.BasicConsume(queue: "queue.product.purchase", autoAck: true, consumer: consumerTopic5);
+            _channel.BasicConsume(queue: "queue.product.customer-sale", autoAck: true, consumer: consumerTopic3);
+            _channel.BasicConsume(queue: "queue.product.reseller-sale", autoAck: true, consumer: consumerTopic4);
+            _channel.BasicConsume(queue: "queue.user.register", autoAck: true, consumer: consumerTopic6);
+
 
             return Task.CompletedTask;
 

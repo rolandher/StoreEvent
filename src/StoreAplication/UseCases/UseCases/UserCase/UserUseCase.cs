@@ -37,7 +37,7 @@ namespace UseCases.UseCases.UserCase
             responseU.BranchId = registerUser.BranchId;
             responseU.UserId = userEntity.UserId;
 
-            var eventResponse = await RegisterAndPersistEvent("UserRegistered", userEntity.BranchId, registerUser);
+            var eventResponse = await RegisterAndPersistEvent("UserRegistered", userEntity.BranchId, userEntity);
 
             _publishEventRepository.PublishRegisterUser(eventResponse);
 

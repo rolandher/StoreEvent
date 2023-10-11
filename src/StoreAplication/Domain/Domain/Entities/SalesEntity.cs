@@ -11,19 +11,19 @@ namespace Domain.Entities
 
         [Required] public SalesObjectQuantity Quantity { get; set; }
 
-        [Required] public SalesObjectType Type { get; set; }
-
         [Required] public SalesObjectTotal Total { get; set; }
+
+        [Required] public SalesObjectType Type { get; set; }        
 
         [Required] public Guid BranchId { get; set; }        
 
-        public SalesEntity(SalesObjectNumber number, SalesObjectQuantity quantity, SalesObjectType type, SalesObjectTotal total, Guid branchId)
+        public SalesEntity(SalesObjectNumber number, SalesObjectQuantity quantity,  SalesObjectTotal total, SalesObjectType type, Guid branchId)
         {
             SalesId = Guid.NewGuid();
             Number = number;
-            Quantity = quantity;
-            Type = type;
+            Quantity = quantity;            
             Total = total;
+            Type = type;
             BranchId = branchId;
         }
     }

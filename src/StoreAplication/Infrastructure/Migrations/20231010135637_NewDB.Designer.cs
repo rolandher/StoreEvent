@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DbConnectionBuilder))]
-    [Migration("20231002170144_StoreEvent")]
-    partial class StoreEvent
+    [Migration("20231010135637_NewDB")]
+    partial class NewDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Infrastructure.DTO.RegisterBranchDTO", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("BranchId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -43,14 +43,14 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BranchId");
 
                     b.ToTable("Branch");
                 });
 
             modelBuilder.Entity("Infrastructure.DTO.RegisterProductDTO", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -65,6 +65,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("InvetoryStock")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -72,16 +75,45 @@ namespace Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("BranchId");
 
                     b.ToTable("Product");
                 });
 
+            modelBuilder.Entity("Infrastructure.DTO.RegisterSalesDTO", b =>
+                {
+                    b.Property<Guid>("SalesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SalesId");
+
+                    b.HasIndex("BranchId");
+
+                    b.ToTable("Sale");
+                });
+
             modelBuilder.Entity("Infrastructure.DTO.RegisterUserDTO", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -104,7 +136,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("BranchId");
 
@@ -115,6 +147,17 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Infrastructure.DTO.RegisterBranchDTO", "Branch")
                         .WithMany("BranchUsers")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("Infrastructure.DTO.RegisterSalesDTO", b =>
+                {
+                    b.HasOne("Infrastructure.DTO.RegisterBranchDTO", "Branch")
+                        .WithMany("BranchSales")
                         .HasForeignKey("BranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -136,6 +179,8 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Infrastructure.DTO.RegisterBranchDTO", b =>
                 {
                     b.Navigation("BranchProducts");
+
+                    b.Navigation("BranchSales");
 
                     b.Navigation("BranchUsers");
                 });
