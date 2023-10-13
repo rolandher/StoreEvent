@@ -2,12 +2,12 @@
 {
     public class UserObjectName
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
 
         public string LastName { get; set; }
-        public UserObjectName(string name, string lastName)
+        public UserObjectName(string firstname, string lastName)
         {
-            Name = name;
+            FirstName = firstname;
             LastName = lastName;
         }
 

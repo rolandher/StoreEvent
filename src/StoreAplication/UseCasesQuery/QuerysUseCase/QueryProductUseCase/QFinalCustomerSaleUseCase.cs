@@ -29,12 +29,7 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             double totalPrice = 0;
             foreach (var item in customerSaleToCreate.Products)
             {
-                var productResponse = await _productRepository.RegisterProductFinalCustomerSaleAsync(item);
-
-                if (productResponse.InventoryStock < item.Quantity)
-                {
-                    throw new Exception($"No hay suficiente stock para el producto: {productResponse.Name}");
-                }
+                var productResponse = await _productRepository.RegisterProductFinalCustomerSaleAsync(item);                               
 
                 var discount = productResponse.Price * 0.15;
                 var price = (productResponse.Price - discount) * item.Quantity;

@@ -22,7 +22,7 @@ namespace UseCases.UseCases.UserCase
         }
         public async Task<UserResponse> RegisterUserAsync(RegisterUserCommand registerUser)
         {
-            var userName = new UserObjectName(registerUser.Name.Name, registerUser.Name.LastName);
+            var userName = new UserObjectName(registerUser.Name.FirstName, registerUser.Name.LastName);
             var userPassword = new UserObjectPassword(registerUser.Password);
             var userEmail = new UserObjectEmail(registerUser.Email);
             var userRole = new UserObjectRole(registerUser.Role);
@@ -30,7 +30,7 @@ namespace UseCases.UseCases.UserCase
 
             var responseU = new UserResponse();
 
-            responseU.Name = $"{registerUser.Name.Name} {registerUser.Name.LastName}";
+            responseU.Name = $"{registerUser.Name.FirstName} {registerUser.Name.LastName}";
             responseU.Email = registerUser.Email;
             responseU.Password = registerUser.Password;
             responseU.Role = registerUser.Role;

@@ -18,7 +18,7 @@ namespace StoreApiQuery.Controllers.ProductQuery
             _getProductByIdUseCase = getProductByIdUseCase;
         }
 
-        [HttpGet("GetProduct/{id}")]
+        [HttpGet("GetProductById")]
         public async Task<ProductResponse> GetProductById(Guid productId)
         {
             return await _getProductByIdUseCase.GetProductById(productId);

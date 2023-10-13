@@ -71,15 +71,7 @@ namespace Infrastructure.SQLAdapter.Repositories
             using (var context = new DbConnectionBuilder())
             {
                 var existingProduct = await context.Product.FindAsync(command.ProductId);
-
-                if (existingProduct == null)
-                {
-                    throw new ArgumentNullException("El producto no se encontro.");
-                }
-                if (existingProduct.InvetoryStock < command.Quantity)
-                {
-                    throw new Exception($"No hay suficiente stock para el producto: {existingProduct.Name}");
-                }
+               
                 existingProduct.InvetoryStock -= command.Quantity;
 
                 await context.SaveChangesAsync();

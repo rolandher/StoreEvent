@@ -19,17 +19,16 @@ using UseCases.UseCases.UserCase;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: MyAllowSpecificOrigins,
-//                      policy =>
-//                      {
-//                          policy.WithOrigins("http://localhost:4200", "https://personal-budget-manageme-7699c.web.app")
-//                            .SetIsOriginAllowedToAllowWildcardSubdomains()
-//                            .AllowAnyHeader()
-//                            .AllowAnyMethod();
-//                      });
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCorsPolicy", builder =>
+    {
+        builder.SetIsOriginAllowed(origen => true)
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
+    });
+});
 
 // Add services to the container.
 
@@ -89,6 +88,7 @@ app.UseHttpsRedirection();
 //app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
+app.UseCors("MyCorsPolicy");
 
 //app.UseMiddleware<ErrorHandleMiddleware>();
 

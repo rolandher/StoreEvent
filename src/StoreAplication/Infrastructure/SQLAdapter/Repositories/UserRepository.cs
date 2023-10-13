@@ -25,7 +25,7 @@ namespace Infrastructure.SQLAdapter.Repositories
             using (var context = new DbConnectionBuilder())
             {
                 var userToRegistered = new RegisterUserDTO(
-                $"{user.Name.Name} {user.Name.LastName}",
+                $"{user.Name.FirstName} {user.Name.LastName}",
                 user.Password.Password,
                 user.Email.Email,
                 user.Role.Role,

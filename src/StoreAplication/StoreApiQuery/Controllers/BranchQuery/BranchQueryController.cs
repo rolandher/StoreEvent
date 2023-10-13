@@ -18,7 +18,7 @@ namespace StoreApiQuery.Controllers.BranchQuery
             _getAllBranchUseCase = getAllBranchUseCase;
         }
 
-        [HttpGet("GetCategory/{id}")]
+        [HttpGet("GetBranchById")]
         public async Task<BranchQueryResponse> GetBranchById(Guid branchId)
         {
             return await _getBrachByIdUseCase.GetBranchIdAsync(branchId);

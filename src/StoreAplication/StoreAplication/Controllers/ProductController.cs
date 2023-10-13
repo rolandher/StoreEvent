@@ -33,19 +33,19 @@ namespace StoreAplication.Controllers
             return await _productUseCase.RegisterProductAsync(registerProductCommand);
         }
 
-        [HttpPost("api/v1/product/purchase")]
+        [HttpPost("purchase")]
         public async Task<ProductResponse> RegisterProductInventoryAsync(Guid productId, [FromBody] RegisterProductInventoryCommand registerProductInventoryCommand)
         {
             return await _inventoryStockUseCase.RegisterProductInventoryAsync(productId, registerProductInventoryCommand);
         }
 
-        [HttpPatch("api/v1/product/customer-sale")]
+        [HttpPatch("customer-sale")]
         public async Task<SaleResponse> RegisterFinalCustomerSaleAsync([FromBody] RegisterSaleCommand registerSaleCommand)
         {
             return await _finalCustomerSaleUseCase.RegisterProductFinalCustomerSaleAsync(registerSaleCommand);
         }
 
-        [HttpPatch("api/v1/product/reseller-sale")]
+        [HttpPatch("reseller-sale")]
         public async Task<SaleResponse> RegisterResellerSaleAsync([FromBody] RegisterSaleCommand registerSaleCommand)
         {
             return await _resellerSaleUseCase.RegisterProductResellerSaleAsync(registerSaleCommand);

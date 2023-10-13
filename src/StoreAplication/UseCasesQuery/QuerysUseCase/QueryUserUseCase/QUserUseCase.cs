@@ -28,7 +28,7 @@ namespace UseCasesQuery.QuerysUseCase.QueryUserUseCase
         public async Task<UserResponse> RegisterUserAsync(string user)
         {
             UserEntity userToCreate = JsonConvert.DeserializeObject<UserEntity>(user);
-            var userName = new UserObjectName(userToCreate.Name.Name, userToCreate.Name.LastName);
+            var userName = new UserObjectName(userToCreate.Name.FirstName, userToCreate.Name.LastName);
             var userPassword = new UserObjectPassword(userToCreate.Password.Password);
             var userEmail = new UserObjectEmail(userToCreate.Email.Email);
             var userRole = new UserObjectRole(userToCreate.Role.Role);
@@ -37,7 +37,7 @@ namespace UseCasesQuery.QuerysUseCase.QueryUserUseCase
             var responseU = await _userRepository.RegisterUserAsync(userEntity);
 
             var responseVm = new UserResponse();
-            responseVm.Name = $"{responseU.Name.Name} {responseU.Name.LastName}";
+            responseVm.Name = $"{responseU.Name.FirstName} {responseU.Name.LastName}";
             responseVm.Password = responseU.Password.Password;
             responseVm.Email = responseU.Email.Email;            
             responseVm.Role = responseU.Role.Role;

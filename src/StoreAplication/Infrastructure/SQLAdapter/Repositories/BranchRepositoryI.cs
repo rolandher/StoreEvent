@@ -45,9 +45,10 @@ namespace Infrastructure.SQLAdapter.Repositories
                 .Include(b => b.BranchSales)
                 .FirstOrDefaultAsync(b => b.BranchId == branchId);
 
-            var branchResponse = _mapper.Map<BranchQueryResponse>(branchWithRelatedData);
+            var branchQueryVm = _mapper.Map<BranchQueryResponse>(branchWithRelatedData);
 
-            return branchResponse;
+            return branchQueryVm;
+            
         }
 
         public async Task<List<BranchQueryResponse>> GetAllBranchesAsync()

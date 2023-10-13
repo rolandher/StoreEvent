@@ -35,12 +35,7 @@ namespace UseCases.UseCases.ProductCase
             double totalPrice = 0;
             foreach (var item in registerSaleCommand.Products)
             {
-                var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);
-
-                if (productResponse.InventoryStock < item.Quantity)
-                {
-                    throw new Exception($"No hay suficiente stock para el producto: {productResponse.Name}");
-                }
+                var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);              
 
                 var discount = productResponse.Price * 0.15;
                 var price = (productResponse.Price - discount) * item.Quantity;

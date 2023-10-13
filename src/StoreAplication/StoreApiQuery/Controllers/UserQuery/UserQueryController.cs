@@ -1,5 +1,6 @@
 ﻿using Domain.Response.User;
 using Microsoft.AspNetCore.Mvc;
+using UseCasesQuery.QuerysUseCase.QueryUserUseCase;
 
 namespace StoreApiQuery.Controllers.UserQuery
 {
@@ -7,21 +8,26 @@ namespace StoreApiQuery.Controllers.UserQuery
     [ApiController]
     public class UserQueryController : ControllerBase
     {
-        //private readonly IUserQueryRepository _userQueryRepository;
+        private readonly QUserGetIdUseCase _qUserGetIdUseCase;
+        private readonly QUserGetAllUseCase _qUserGetAllUseCase;
 
-        //public UserQueryController(IUserQueryRepository userQueryRepository)
-        //{
-        //    _userQueryRepository = userQueryRepository;
-        //}
+        public UserQueryController(QUserGetIdUseCase qUserGetIdUseCase, QUserGetAllUseCase qUserGetAllUseCase)
+        {
+            _qUserGetIdUseCase = qUserGetIdUseCase;
+            _qUserGetAllUseCase = qUserGetAllUseCase;
+        }
 
-        //[HttpGet]
-        //public async Task<IEnumerable<UserResponse>> GetAllUsersAsync()
-        //{
-        //    var users = await _userQueryRepository.GetAllUsersAsync();
-        //    return users;
-        //}       
+        [HttpGet("GetUserById")]
+        public async Task<UserQueryResponse> GetUserById(Guid UserId)
+        {
+            return await _qUserGetIdUseCase.GetUserById(UserId);
+        }
 
-       
+        [HttpGet("GetAllUsers")]
+        public async Task<List<UserQueryResponse>> GetAllUsers()
+        {
+            return await _qUserGetAllUseCase.GetAllUsers();
+        }
 
     }
 }
