@@ -35,7 +35,7 @@ namespace UseCases.UseCases.ProductCase
             double totalPrice = 0;
             foreach (var item in registerSaleCommand.Products)
             {
-                var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);              
+                var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);
 
                 var discount = productResponse.Price * 0.15;
                 var price = (productResponse.Price - discount) * item.Quantity;
@@ -56,7 +56,7 @@ namespace UseCases.UseCases.ProductCase
             saleResponse.Total = saleEntity.Total.Total;
             saleResponse.Type = saleEntity.Type.Type;            
             saleResponse.BranchId = saleEntity.BranchId;
-            saleEntity.SalesId = saleEntity.SalesId;
+            saleResponse.SalesId = saleEntity.SalesId;
 
 
             var eventResponse = await RegisterAndPersistEvent("ProductFinalCustomerSaleRegistered", registerSaleCommand.BranchId, registerSaleCommand);

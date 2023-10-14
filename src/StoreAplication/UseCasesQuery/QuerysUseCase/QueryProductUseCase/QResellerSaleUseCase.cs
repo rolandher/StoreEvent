@@ -31,11 +31,6 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             {
                 var productResponse = await _productRepository.RegisterProductResellerSaleAsync(item);
 
-                if (productResponse.InventoryStock < item.Quantity)
-                {
-                    throw new Exception($"No hay suficiente stock para el producto: {productResponse.Name}");
-                }
-
                 var discount = productResponse.Price * 0.25;
                 var price = (productResponse.Price - discount) * item.Quantity;
                 totalPrice += price;

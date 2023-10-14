@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  storeapiquery:
+    image: ${DOCKER_REGISTRY-}storeapiquery
+    build:
+      context: .
+      dockerfile: StoreApiQuery/Dockerfile
+
+  storeaplication:
+    image: ${DOCKER_REGISTRY-}storeaplication
+    build:
+      context: .
+      dockerfile: StoreAplication/Dockerfile
+
+
+  storewebsocket:
+    image: ${DOCKER_REGISTRY-}storewebsocket
+    build:
+      context: .
+      dockerfile: StoreWebSocket/Dockerfile
+

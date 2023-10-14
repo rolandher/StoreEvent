@@ -4,19 +4,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddSignalR();
 builder.Services.AddCors(opt =>
 {
-    opt.AddPolicy("SignalR", 
+    opt.AddPolicy("SignalR",
         build =>
         {
             build.SetIsOriginAllowed(origen => true)
-                .AllowAnyMethod()               
+                .AllowAnyMethod()
                 .AllowCredentials()
                 .AllowAnyHeader();
         });
-  
+
 });
 
 var app = builder.Build();
@@ -33,9 +31,6 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("SignalR");
 
-app.MapControllerRoute(
-       name: "default",
-          pattern: "{controller}/{action=Index}/{id?}");
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chatHub");

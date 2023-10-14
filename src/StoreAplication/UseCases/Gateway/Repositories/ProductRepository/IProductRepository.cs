@@ -1,8 +1,8 @@
 ﻿using Domain.Commands.Product;
-using Domain.Commands.Sales;
 using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesProduct;
 using Domain.Response.Product;
+using Domain.Response.Sale;
 
 namespace UseCases.Gateway.Repositories.ProductRepository
 {
@@ -12,9 +12,9 @@ namespace UseCases.Gateway.Repositories.ProductRepository
 
         Task<ProductResponse> RegisterProductInventoryAsync(ProductObjectInventoryStock product, Guid productId);
 
-        Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(RegisterProductSaleCommand command);
+        Task<ProductResponse> RegisterProductFinalCustomerSaleAsync(RegisterProductSaleCommand registersalecommand);
 
-        Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand command);
+        Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand registersalecommand);
 
         Task <ProductResponse> GetProductByIdAsync(Guid productId);
 

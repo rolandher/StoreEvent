@@ -1,4 +1,5 @@
-﻿using Domain.Response.Sale;
+﻿using Domain.Response.Product;
+using Domain.Response.Sale;
 using System;
 using System.Collections.Generic;
 using System.Linq;

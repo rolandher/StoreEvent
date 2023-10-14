@@ -1,5 +1,4 @@
 ﻿using Domain.Commands.Product;
-using Domain.Commands.Sales;
 using Domain.Response.Product;
 using Domain.Response.Sale;
 using Microsoft.AspNetCore.Mvc;
