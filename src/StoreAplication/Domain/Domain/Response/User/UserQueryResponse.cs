@@ -4,7 +4,7 @@ namespace Domain.Response.User
 {
     public class UserQueryResponse
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         [Required] public string Name { get; set; }
         [Required] public string Password { get; set; }
 

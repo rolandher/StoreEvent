@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.21.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UseCases\UseCasesCommand.csproj" />
+    <ProjectReference Include="..\..\Application\UseCasesCommand\UseCasesCommand.csproj" />
   </ItemGroup>
 
 </Project>

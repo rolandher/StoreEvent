@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <ProjectReference Include="..\UseCases\UseCasesCommand.csproj" />
-	  
-	  
+    <ProjectReference Include="..\..\Application\UseCasesCommand\UseCasesCommand.csproj" />
   </ItemGroup>
 
 </Project>

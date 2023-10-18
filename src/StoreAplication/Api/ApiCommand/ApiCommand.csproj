@@ -30,11 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdapterRabbitProducer\AdapterPublish.csproj" />
-    <ProjectReference Include="..\Adapter\AdapterMongoDB.csproj" />
-    <ProjectReference Include="..\Domain\Domain\Domain.csproj" />
-    <ProjectReference Include="..\UseCases\UseCasesCommand.csproj" />
-	  <ProjectReference Include="..\Infrastructure\AdapterSQL.csproj" />
+    <ProjectReference Include="..\..\Application\UseCasesCommand\UseCasesCommand.csproj" />
+    <ProjectReference Include="..\..\Domain\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AdapterMongoDB\AdapterMongoDB.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AdapterPublish\AdapterPublish.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\AdapterSQL\AdapterSQL.csproj" />
   </ItemGroup>
 
 </Project>
