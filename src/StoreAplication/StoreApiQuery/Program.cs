@@ -1,18 +1,20 @@
-using AdapteRabbitConsumer.Consumer;
+using AdapterSQL.ConfigurationProfileSql;
+using AdapterSQL.SQLAdapter;
+using AdapterSQL.SQLAdapter.Repositories;
+using AdapterSubscribe.SubscribeE;
 using AutoMapper.Data;
-using Infrastructure.ConfigurationProfileSql;
-using Infrastructure.SQLAdapter;
-using Infrastructure.SQLAdapter.Repositories;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories.BranchRepository;
-using UseCases.Gateway.Repositories.ProductRepository;
-using UseCases.Gateway.Repositories.UserRepository;
-using UseCases.UseCases.ProductCase;
+using UseCasesCommand.Gateway.Repositories.BranchRepository;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories.UserRepository;
 using UseCasesQuery.Factory;
 using UseCasesQuery.FactoryInter;
 using UseCasesQuery.QuerysUseCase.QueryBranchUseCase;
 using UseCasesQuery.QuerysUseCase.QueryProductUseCase;
 using UseCasesQuery.QuerysUseCase.QueryUserUseCase;
+using UseCasesQuery.RepositoriesQ.BranchRepositoryQ;
+using UseCasesQuery.RepositoriesQ.ProductRepositoryQ;
+using UseCasesQuery.RepositoriesQ.UserRepositoryQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +38,7 @@ builder.Services.AddTransient<QGetAllProductsUseCase>();
 builder.Services.AddTransient<QUserGetIdUseCase>();
 builder.Services.AddTransient<QUserGetAllUseCase>();
 
-builder.Services.AddHostedService<ConsumerEvent>();
+builder.Services.AddHostedService<SubscribeEvent>();
 
 builder.Services.AddSingleton<IBranchUseCaseQueryFactory, BranchUseCaseQueryFactory>();
 builder.Services.AddScoped<IBranchUseCaseQuery, QBranchUseCase>();
@@ -48,7 +50,7 @@ builder.Services.AddScoped<IProductResellerSaleUseCaseQuery, QResellerSaleUseCas
 builder.Services.AddScoped<IProductCustomerSaleUseCaseQuery, QFinalCustomerSaleUseCase>();
 
 builder.Services.AddSingleton<IUserUserCaseQueryFactory, UserUseCaseQueryFactory>();
-builder.Services.AddScoped<IUserRegisterUseCase, QUserUseCase>();
+builder.Services.AddScoped<IUserRegisterUseCaseQuery, QUserUseCase>();
 
 builder.Services.AddScoped<IBranchRepository, BranchRepositoryI>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -68,7 +70,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ProfileSql));
 
-builder.Services.AddAutoMapper(config => {
+builder.Services.AddAutoMapper(config =>
+{
     config.AddProfile<ProfileSql>();
 });
 

@@ -1,12 +1,7 @@
 ﻿using Domain.Response.Product;
 using Domain.Response.Sale;
 using Domain.Response.User;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Response.Branch
 {

@@ -1,13 +1,11 @@
 ﻿using Domain.Commands.User;
 using Domain.Entities;
-using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesUser;
 using Domain.Response.User;
 using Newtonsoft.Json;
-using UseCases.Gateway;
-using UseCases.Gateway.Repositories;
+using UseCasesCommand.Gateway.Repositories;
 
-namespace UseCases.UseCases.UserCase
+namespace UseCasesCommand.UseCases.UserCase
 {
     public class UserUseCase
     {

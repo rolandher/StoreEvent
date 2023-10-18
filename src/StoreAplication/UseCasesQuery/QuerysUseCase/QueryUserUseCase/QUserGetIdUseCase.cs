@@ -1,10 +1,5 @@
 ﻿using Domain.Response.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories.UserRepository;
+using UseCasesCommand.Gateway.Repositories.UserRepository;
 
 namespace UseCasesQuery.QuerysUseCase.QueryUserUseCase
 {

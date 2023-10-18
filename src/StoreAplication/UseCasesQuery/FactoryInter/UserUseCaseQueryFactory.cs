@@ -1,12 +1,7 @@
 ﻿
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories.UserRepository;
 using UseCasesQuery.Factory;
+using UseCasesQuery.RepositoriesQ.UserRepositoryQ;
 
 namespace UseCasesQuery.FactoryInter
 {
@@ -19,12 +14,12 @@ namespace UseCasesQuery.FactoryInter
             _serviceScopeFactory = serviceScopeFactory;
         }
 
-        public IUserRegisterUseCase Create()
+        public IUserRegisterUseCaseQuery Create()
         {
             using var scope = _serviceScopeFactory.CreateScope();
-            return scope.ServiceProvider.GetRequiredService<IUserRegisterUseCase>();
+            return scope.ServiceProvider.GetRequiredService<IUserRegisterUseCaseQuery>();
         }
 
-       
+
     }
 }

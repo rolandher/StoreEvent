@@ -2,8 +2,7 @@
 using Domain.Response.Product;
 using Domain.Response.Sale;
 using Microsoft.AspNetCore.Mvc;
-using UseCases.Gateway;
-using UseCases.UseCases.ProductCase;
+using UseCasesCommand.UseCases.ProductCase;
 
 namespace StoreAplication.Controllers
 {

@@ -1,18 +1,9 @@
-﻿using Domain.Commands.Product;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesProduct;
-using Domain.ObjectValues.ObjectValuesSales;
-using Domain.ProductEvent;
 using Domain.Response.Product;
-using Domain.Response.Sale;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories;
-using UseCases.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
+using UseCasesQuery.RepositoriesQ.ProductRepositoryQ;
 
 namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
 {

@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
-using Infrastructure.DTO;
-using UseCases.Gateway.Repositories.ProductRepository;
+﻿using AdapterSQL.DTO;
+using Domain.Entities;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
 
-namespace Infrastructure.SQLAdapter.Repositories
+namespace AdapterSQL.SQLAdapter.Repositories
 {
     public class SalesRepository : ISalesRepository
     {

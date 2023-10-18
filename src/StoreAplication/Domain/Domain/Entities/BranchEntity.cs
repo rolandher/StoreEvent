@@ -1,5 +1,4 @@
-﻿using Domain.ObjectValues;
-using Domain.ObjectValues.ObjectValuesBranch;
+﻿using Domain.ObjectValues.ObjectValuesBranch;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
@@ -14,7 +13,7 @@ namespace Domain.Entities
 
         [Required(ErrorMessage = "La localidad es obligatoria.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 100 caracteres.")]
-        public BranchObjectLocation Location { get; set; }      
+        public BranchObjectLocation Location { get; set; }
 
         public BranchEntity(BranchObjectName name, BranchObjectLocation location)
         {

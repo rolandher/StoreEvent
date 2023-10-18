@@ -1,13 +1,11 @@
-﻿using AutoMapper;
+﻿using AdapterSQL.DTO;
+using AutoMapper;
 using Domain.Entities;
-using Domain.ObjectValues;
-using Domain.ObjectValues.ObjectValuesUser;
 using Domain.Response.User;
-using Infrastructure.DTO;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories.UserRepository;
+using UseCasesCommand.Gateway.Repositories.UserRepository;
 
-namespace Infrastructure.SQLAdapter.Repositories
+namespace AdapterSQL.SQLAdapter.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -17,7 +15,7 @@ namespace Infrastructure.SQLAdapter.Repositories
         public UserRepository(DbConnectionBuilder dbConnectionBuilder, IMapper mapper)
         {
             _dbConnectionBuilder = dbConnectionBuilder;
-            _mapper = mapper;   
+            _mapper = mapper;
         }
 
         public async Task<UserEntity> RegisterUserAsync(UserEntity user)

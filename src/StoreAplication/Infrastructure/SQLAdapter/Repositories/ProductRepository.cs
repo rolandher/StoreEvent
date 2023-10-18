@@ -1,14 +1,13 @@
-﻿using AutoMapper;
+﻿using AdapterSQL.DTO;
+using AutoMapper;
 using Domain.Commands.Product;
 using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesProduct;
 using Domain.Response.Product;
-using Domain.Response.Sale;
-using Infrastructure.DTO;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
 
-namespace Infrastructure.SQLAdapter.Repositories
+namespace AdapterSQL.SQLAdapter.Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -89,11 +88,11 @@ namespace Infrastructure.SQLAdapter.Repositories
             }
         }
 
-        public async Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand command )
+        public async Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand command)
         {
             using (var context = new DbConnectionBuilder())
             {
-                var existingProduct = await context.Product.FindAsync(command.ProductId);             
+                var existingProduct = await context.Product.FindAsync(command.ProductId);
 
                 existingProduct.InvetoryStock -= command.Quantity;
 

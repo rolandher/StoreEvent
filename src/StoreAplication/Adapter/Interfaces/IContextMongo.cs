@@ -1,7 +1,7 @@
-﻿using Adapter.Data;
+﻿using AdapterMongoDB.Data;
 using MongoDB.Driver;
 
-namespace Adapter.Interfaces
+namespace AdapterMongoDB.Interfaces
 {
     public interface IContextMongo
     {

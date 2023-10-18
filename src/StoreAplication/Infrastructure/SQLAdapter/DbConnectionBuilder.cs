@@ -1,8 +1,8 @@
-﻿using Infrastructure.DTO;
+﻿using AdapterSQL.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.SQLAdapter
+namespace AdapterSQL.SQLAdapter
 {
     public class DbConnectionBuilder : DbContext
     {

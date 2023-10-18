@@ -3,15 +3,10 @@ using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesSales;
 using Domain.Response.Sale;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories;
-using UseCases.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
 
-namespace UseCases.UseCases.ProductCase
+namespace UseCasesCommand.UseCases.ProductCase
 {
     public class ResellerSaleUseCase
     {
@@ -34,7 +29,7 @@ namespace UseCases.UseCases.ProductCase
             double totalPrice = 0;
             foreach (var item in registersalecommand.Products)
             {
-                var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);                
+                var productResponse = await _productRepository.GetProductByIdAsync(item.ProductId);
 
                 var discount = productResponse.Price * 0.25;
                 var price = (productResponse.Price - discount) * item.Quantity;
@@ -42,17 +37,17 @@ namespace UseCases.UseCases.ProductCase
             }
 
             var saleNumber = new SalesObjectNumber(registersalecommand.Number);
-            var saleQuantity = new SalesObjectQuantity(registersalecommand.Products.Count);            
+            var saleQuantity = new SalesObjectQuantity(registersalecommand.Products.Count);
             var saleTotal = new SalesObjectTotal(totalPrice);
             var saleType = new SalesObjectType("ResellerSale");
 
-            var saleEntity = new SalesEntity(saleNumber, saleQuantity,saleTotal, saleType, registersalecommand.BranchId);
+            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleTotal, saleType, registersalecommand.BranchId);
 
             var saleResponseS = new SaleResponse();
             saleResponseS.Number = saleEntity.Number.Number;
             saleResponseS.Quantity = saleEntity.Quantity.Quantity;
             saleResponseS.Total = saleEntity.Total.Total;
-            saleResponseS.Type = saleEntity.Type.Type;            
+            saleResponseS.Type = saleEntity.Type.Type;
             saleResponseS.BranchId = saleEntity.BranchId;
             saleEntity.SalesId = saleEntity.SalesId;
 

@@ -3,12 +3,8 @@ using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesSales;
 using Domain.Response.Sale;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
+using UseCasesQuery.RepositoriesQ.ProductRepositoryQ;
 
 namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
 {
@@ -41,13 +37,13 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             var saleTotal = new SalesObjectTotal(totalPrice);
             var saleType = new SalesObjectType("ResellerSale");
 
-            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleTotal, saleType, ResellerSaleToCreate.BranchId); 
+            var saleEntity = new SalesEntity(saleNumber, saleQuantity, saleTotal, saleType, ResellerSaleToCreate.BranchId);
             var saleEntityResponse = await _saleProductRepository.RegisterSaleAsync(saleEntity);
 
             var saleResponse = new SaleResponse();
             saleResponse.BranchId = saleEntity.BranchId;
             saleResponse.Number = saleEntity.Number.Number;
-            saleResponse.Quantity = saleEntity.Quantity.Quantity;            
+            saleResponse.Quantity = saleEntity.Quantity.Quantity;
             saleResponse.Total = saleEntity.Total.Total;
             saleResponse.Type = saleEntity.Type.Type;
             saleResponse.SalesId = saleEntityResponse.SalesId;
@@ -55,5 +51,5 @@ namespace UseCasesQuery.QuerysUseCase.QueryProductUseCase
             return saleResponse;
         }
     }
-    
+
 }

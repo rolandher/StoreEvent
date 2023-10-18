@@ -4,18 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("SignalR",
-        build =>
-        {
-            build.SetIsOriginAllowed(origen => true)
-                .AllowAnyMethod()
-                .AllowCredentials()
-                .AllowAnyHeader();
-        });
-
-});
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 

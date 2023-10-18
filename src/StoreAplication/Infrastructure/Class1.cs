@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+﻿namespace AdapterSQL
 {
     public class Class1
     {

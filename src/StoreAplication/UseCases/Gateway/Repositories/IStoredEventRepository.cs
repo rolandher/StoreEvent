@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 
-namespace UseCases.Gateway.Repositories
+namespace UseCasesCommand.Gateway.Repositories
 {
     public interface IStoredEventRepository
     {
-        Task<String> RegisterEvent(StoredEventEntity storedEvent);
+        Task<string> RegisterEvent(StoredEventEntity storedEvent);
     }
 }

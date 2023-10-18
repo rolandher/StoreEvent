@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Infrastructure.DTO
+namespace AdapterSQL.DTO
 {
     public class RegisterSalesDTO
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid SalesId { get; set; }       
+        public Guid SalesId { get; set; }
 
         [Required] public int Number { get; set; }
 
@@ -23,9 +23,9 @@ namespace Infrastructure.DTO
         [ForeignKey("BranchId")]
         public virtual RegisterBranchDTO Branch { get; set; }
 
-        public RegisterSalesDTO( int number, int quantity, double total, string type, Guid branchId)
+        public RegisterSalesDTO(int number, int quantity, double total, string type, Guid branchId)
         {
-           
+
             Number = number;
             Quantity = quantity;
             Total = total;

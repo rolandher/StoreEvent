@@ -1,4 +1,4 @@
-﻿using Domain.ObjectValues;
+﻿using Domain.ObjectValues.ObjectValuesUser;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Commands.User

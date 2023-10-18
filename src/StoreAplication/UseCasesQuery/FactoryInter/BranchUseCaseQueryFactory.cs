@@ -1,12 +1,6 @@
-﻿using Domain.Response.Branch;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories.BranchRepository;
+﻿using Microsoft.Extensions.DependencyInjection;
 using UseCasesQuery.Factory;
+using UseCasesQuery.RepositoriesQ.BranchRepositoryQ;
 
 namespace UseCasesQuery.FactoryInter
 {
@@ -24,6 +18,6 @@ namespace UseCasesQuery.FactoryInter
             using var scope = _serviceScopeFactory.CreateScope();
             return scope.ServiceProvider.GetRequiredService<IBranchUseCaseQuery>();
         }
-        
+
     }
 }

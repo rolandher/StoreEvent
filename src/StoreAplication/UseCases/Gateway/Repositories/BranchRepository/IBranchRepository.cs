@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Response.Branch;
 
-namespace UseCases.Gateway.Repositories.BranchRepository
+namespace UseCasesCommand.Gateway.Repositories.BranchRepository
 {
     public interface IBranchRepository
     {

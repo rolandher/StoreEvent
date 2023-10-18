@@ -1,14 +1,9 @@
 ﻿using Domain.Entities;
-using Domain.ObjectValues;
 using Domain.ObjectValues.ObjectValuesBranch;
 using Domain.Response.Branch;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories.BranchRepository;
+using UseCasesCommand.Gateway.Repositories.BranchRepository;
+using UseCasesQuery.RepositoriesQ.BranchRepositoryQ;
 
 namespace UseCasesQuery.QuerysUseCase.QueryBranchUseCase
 {

@@ -1,10 +1,5 @@
 ﻿using Domain.Response.Branch;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories.BranchRepository;
+using UseCasesCommand.Gateway.Repositories.BranchRepository;
 
 namespace UseCasesQuery.QuerysUseCase.QueryBranchUseCase
 {

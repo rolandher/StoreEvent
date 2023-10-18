@@ -1,8 +1,8 @@
-﻿using Adapter.Data;
+﻿using AdapterMongoDB.Data;
 using AutoMapper;
 using Domain.Entities;
 
-namespace Adapter.Common
+namespace AdapterMongoDB.Common
 {
     public class ProfileMongo : Profile
     {

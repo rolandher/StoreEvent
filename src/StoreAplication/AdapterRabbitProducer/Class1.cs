@@ -1,4 +1,4 @@
-﻿namespace AdapterRabbitProducer
+﻿namespace AdapterPublish
 {
     public class Class1
     {

@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace Adapter.Data
+namespace AdapterMongoDB.Data
 {
     public class StoredEventDTO
     {

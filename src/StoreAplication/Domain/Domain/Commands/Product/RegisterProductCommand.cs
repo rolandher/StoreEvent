@@ -10,7 +10,7 @@ namespace Domain.Commands.Product
 
         [Required] public double Price { get; set; }
 
-        [Required] public int InventoryStock { get;}
+        [Required] public int InventoryStock { get; }
 
         [Required] public string Category { get; set; }
 

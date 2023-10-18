@@ -2,9 +2,8 @@
 using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesProduct;
 using Domain.Response.Product;
-using Domain.Response.Sale;
 
-namespace UseCases.Gateway.Repositories.ProductRepository
+namespace UseCasesCommand.Gateway.Repositories.ProductRepository
 {
     public interface IProductRepository
     {
@@ -16,7 +15,7 @@ namespace UseCases.Gateway.Repositories.ProductRepository
 
         Task<ProductResponse> RegisterProductResellerSaleAsync(RegisterProductSaleCommand registersalecommand);
 
-        Task <ProductResponse> GetProductByIdAsync(Guid productId);
+        Task<ProductResponse> GetProductByIdAsync(Guid productId);
 
         Task<List<ProductResponse>> GetAllProductAsync();
 

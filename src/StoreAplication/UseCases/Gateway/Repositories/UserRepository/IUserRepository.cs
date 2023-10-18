@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Response.User;
 
-namespace UseCases.Gateway.Repositories.UserRepository
+namespace UseCasesCommand.Gateway.Repositories.UserRepository
 {
     public interface IUserRepository
     {

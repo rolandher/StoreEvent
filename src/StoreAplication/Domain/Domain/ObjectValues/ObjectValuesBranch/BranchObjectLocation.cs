@@ -1,4 +1,4 @@
-﻿namespace Domain.ObjectValues
+﻿namespace Domain.ObjectValues.ObjectValuesBranch
 {
     public class BranchObjectLocation
     {

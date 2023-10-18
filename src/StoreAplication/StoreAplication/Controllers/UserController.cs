@@ -1,8 +1,7 @@
 ﻿using Domain.Commands.User;
 using Domain.Response.User;
 using Microsoft.AspNetCore.Mvc;
-using UseCases.Gateway;
-using UseCases.UseCases.UserCase;
+using UseCasesCommand.UseCases.UserCase;
 
 namespace StoreAplication.Controllers
 {
@@ -22,7 +21,7 @@ namespace StoreAplication.Controllers
         public async Task<UserResponse> RegisterUserAsync([FromBody] RegisterUserCommand registerUser)
         {
             return await _userUseCase.RegisterUserAsync(registerUser);
-            
+
         }
 
     }

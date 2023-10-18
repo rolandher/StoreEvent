@@ -1,16 +1,11 @@
 ﻿using Domain.Commands.Product;
 using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesProduct;
-using Domain.ObjectValues.ObjectValuesSales;
-using Domain.ProductEvent;
-using Domain.Response.Product;
-using Domain.Response.Sale;
 using Newtonsoft.Json;
-using UseCases.Gateway;
-using UseCases.Gateway.Repositories;
-using UseCases.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
 
-namespace UseCases.UseCases.ProductCase
+namespace UseCasesCommand.UseCases.ProductCase
 {
     public class ProductUseCase
     {
@@ -38,7 +33,7 @@ namespace UseCases.UseCases.ProductCase
 
             _publishEventRepository.PublishRegisterProduct(eventResponse);
             return registerProduct;
-        
+
 
         }
 

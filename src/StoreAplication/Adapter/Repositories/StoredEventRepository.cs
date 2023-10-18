@@ -1,11 +1,11 @@
-﻿using Adapter.Data;
-using Adapter.Interfaces;
+﻿using AdapterMongoDB.Data;
+using AdapterMongoDB.Interfaces;
 using AutoMapper;
 using Domain.Entities;
 using MongoDB.Driver;
-using UseCases.Gateway.Repositories;
+using UseCasesCommand.Gateway.Repositories;
 
-namespace Adapter.Repositories
+namespace AdapterMongoDB.Repositories
 {
     public class StoredEventRepository : IStoredEventRepository
     {

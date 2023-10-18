@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Infrastructure.DTO
+namespace AdapterSQL.DTO
 {
     public class RegisterProductDTO
     {
@@ -39,8 +39,8 @@ namespace Infrastructure.DTO
         {
         }
 
-        
-        
+
+
 
     }
 }

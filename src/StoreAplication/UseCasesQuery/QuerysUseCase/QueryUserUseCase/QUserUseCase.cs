@@ -1,28 +1,20 @@
-﻿using Domain.Commands.User;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.ObjectValues.ObjectValuesUser;
-using Domain.ObjectValues;
 using Domain.Response.User;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UseCases.Gateway.Repositories;
-using UseCases.Gateway.Repositories.UserRepository;
-using UseCases.UseCases.UserCase;
+using UseCasesCommand.Gateway.Repositories.UserRepository;
+using UseCasesQuery.RepositoriesQ.UserRepositoryQ;
 
 namespace UseCasesQuery.QuerysUseCase.QueryUserUseCase
 {
-    public class QUserUseCase : IUserRegisterUseCase
+    public class QUserUseCase : IUserRegisterUseCaseQuery
     {
 
         private readonly IUserRepository _userRepository;
-        
+
         public QUserUseCase(IUserRepository userRepository)
         {
-            _userRepository = userRepository;            
+            _userRepository = userRepository;
         }
 
         public async Task<UserResponse> RegisterUserAsync(string user)
@@ -39,7 +31,7 @@ namespace UseCasesQuery.QuerysUseCase.QueryUserUseCase
             var responseVm = new UserResponse();
             responseVm.Name = $"{responseU.Name.FirstName} {responseU.Name.LastName}";
             responseVm.Password = responseU.Password.Password;
-            responseVm.Email = responseU.Email.Email;            
+            responseVm.Email = responseU.Email.Email;
             responseVm.Role = responseU.Role.Role;
             responseVm.BranchId = responseU.BranchId;
             responseVm.UserId = responseU.UserId;

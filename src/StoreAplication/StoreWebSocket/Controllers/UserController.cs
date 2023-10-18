@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using StoreWebSocket.Hubs;
+﻿using Microsoft.AspNetCore.Mvc;
 
 
 namespace StoreWebSocket.Controllers
@@ -10,9 +7,9 @@ namespace StoreWebSocket.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-       
 
 
-      
+
+
     }
 }

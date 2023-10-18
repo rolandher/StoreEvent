@@ -1,19 +1,12 @@
-﻿using Domain.Entities;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using UseCasesQuery.Factory;
-using UseCasesQuery.FactoryInter;
 
-namespace AdapteRabbitConsumer.Consumer
+namespace AdapterSubscribe.SubscribeE
 {
-    public class ConsumerEvent : BackgroundService
+    public class SubscribeEvent : BackgroundService
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
@@ -21,7 +14,7 @@ namespace AdapteRabbitConsumer.Consumer
         private readonly IProductUseCaseQueryFactory _factoryProduct;
         private readonly IUserUserCaseQueryFactory _factoryUser;
 
-        public ConsumerEvent(IBranchUseCaseQueryFactory factoryBranch, IProductUseCaseQueryFactory factoryProduct,
+        public SubscribeEvent(IBranchUseCaseQueryFactory factoryBranch, IProductUseCaseQueryFactory factoryProduct,
             IUserUserCaseQueryFactory factoryUser)
         {
             _factorybranch = factoryBranch;
@@ -30,20 +23,20 @@ namespace AdapteRabbitConsumer.Consumer
 
             var factory = new ConnectionFactory()
             {
-                HostName = "localhost",               
+                HostName = "localhost",
             };
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
             _channel.ExchangeDeclare("topic_exchange", ExchangeType.Topic, true);
-            _channel.QueueDeclare("queue.branch.register", true, false, false);            
+            _channel.QueueDeclare("queue.branch.register", true, false, false);
             _channel.QueueDeclare("queue.product.register", true, false, false);
             _channel.QueueDeclare("queue.product.purchase", true, false, false);
             _channel.QueueDeclare("queue.product.customer-sale", true, false, false);
             _channel.QueueDeclare("queue.product.reseller-sale", true, false, false);
             _channel.QueueDeclare("queue.user.register", true, false, false);
-            _channel.QueueBind("queue.branch.register", "topic_exchange", "topic.routing.branch");            
+            _channel.QueueBind("queue.branch.register", "topic_exchange", "topic.routing.branch");
             _channel.QueueBind("queue.product.register", "topic_exchange", "topic.routing.product");
             _channel.QueueBind("queue.product.purchase", "topic_exchange", "topic.routing.product.purchase");
             _channel.QueueBind("queue.product.customer-sale", "topic_exchange", "topic.routing.product.customer-sale");
@@ -53,7 +46,7 @@ namespace AdapteRabbitConsumer.Consumer
 
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
-       
+
         {
             var registerBranchUseCase = _factorybranch.Create();
             var consumerTopic1 = new EventingBasicConsumer(_channel);
@@ -115,7 +108,7 @@ namespace AdapteRabbitConsumer.Consumer
                 Console.WriteLine($"Recibido en Topic 6: '{message}'");
             };
 
-            _channel.BasicConsume(queue:"queue.branch.register", autoAck: true, consumer: consumerTopic1);            
+            _channel.BasicConsume(queue: "queue.branch.register", autoAck: true, consumer: consumerTopic1);
             _channel.BasicConsume(queue: "queue.product.register", autoAck: true, consumer: consumerTopic2);
             _channel.BasicConsume(queue: "queue.product.purchase", autoAck: true, consumer: consumerTopic5);
             _channel.BasicConsume(queue: "queue.product.customer-sale", autoAck: true, consumer: consumerTopic3);
@@ -135,5 +128,5 @@ namespace AdapteRabbitConsumer.Consumer
         }
     }
 
-    
+
 }

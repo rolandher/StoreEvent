@@ -1,6 +1,4 @@
-﻿using Domain.Response.User;
-using Microsoft.AspNetCore.Mvc;
-using UseCasesQuery.QuerysUseCase.QueryUserUseCase;
+﻿using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,7 +8,7 @@ namespace StoreApiQuery.Controllers.SalesQuery
     [ApiController]
     public class SalesQueryController : ControllerBase
     {
-       
+
 
     }
 }

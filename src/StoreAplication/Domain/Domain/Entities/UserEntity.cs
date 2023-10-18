@@ -1,6 +1,4 @@
-﻿using Domain.ObjectValues;
-using Domain.ObjectValues.ObjectValuesUser;
-using System.ComponentModel.DataAnnotations;
+﻿using Domain.ObjectValues.ObjectValuesUser;
 
 namespace Domain.Entities
 {

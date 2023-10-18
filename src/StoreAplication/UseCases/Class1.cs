@@ -1,4 +1,4 @@
-﻿namespace UseCases
+﻿namespace UseCasesCommand
 {
     public class Class1
     {

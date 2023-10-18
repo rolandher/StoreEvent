@@ -1,5 +1,4 @@
 ﻿using Domain.Response.Branch;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UseCasesQuery.QuerysUseCase.QueryBranchUseCase;
 

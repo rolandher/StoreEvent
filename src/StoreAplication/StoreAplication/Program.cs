@@ -1,21 +1,21 @@
 
-using Adapter;
-using Adapter.Common;
-using Adapter.Interfaces;
-using Adapter.Repositories;
-using AdapterRabbitProducer.Producer;
+using AdapterMongoDB;
+using AdapterMongoDB.Common;
+using AdapterMongoDB.Interfaces;
+using AdapterMongoDB.Repositories;
+using AdapterPublish.PublishE;
+using AdapterSQL.ConfigurationProfileSql;
+using AdapterSQL.SQLAdapter;
+using AdapterSQL.SQLAdapter.Repositories;
 using AutoMapper.Data;
-using Infrastructure.ConfigurationProfileSql;
-using Infrastructure.SQLAdapter;
-using Infrastructure.SQLAdapter.Repositories;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories;
-using UseCases.Gateway.Repositories.BranchRepository;
-using UseCases.Gateway.Repositories.ProductRepository;
-using UseCases.Gateway.Repositories.UserRepository;
-using UseCases.UseCases.BranchCase;
-using UseCases.UseCases.ProductCase;
-using UseCases.UseCases.UserCase;
+using UseCasesCommand.Gateway.Repositories;
+using UseCasesCommand.Gateway.Repositories.BranchRepository;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories.UserRepository;
+using UseCasesCommand.UseCases.BranchCase;
+using UseCasesCommand.UseCases.ProductCase;
+using UseCasesCommand.UseCases.UserCase;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +47,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 
 builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();
-builder.Services.AddScoped<IPublishEventRepository, ProducerEvent>();
+builder.Services.AddScoped<IPublishEventRepository, PublishEvent>();
 
 builder.Services.AddControllers();
 

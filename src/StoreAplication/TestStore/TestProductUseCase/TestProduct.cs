@@ -1,5 +1,5 @@
 ﻿using Moq;
-using UseCases.Gateway.Repositories.ProductRepository;
+using UseCasesCommand.Gateway.Repositories.ProductRepository;
 
 namespace TestStore.TestProductUseCase
 {

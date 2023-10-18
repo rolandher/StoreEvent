@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using AdapterSQL.DTO;
+using AutoMapper;
 using Domain.Entities;
 using Domain.Response.Branch;
-using Infrastructure.DTO;
 using Microsoft.EntityFrameworkCore;
-using UseCases.Gateway.Repositories.BranchRepository;
+using UseCasesCommand.Gateway.Repositories.BranchRepository;
 
-namespace Infrastructure.SQLAdapter.Repositories
+namespace AdapterSQL.SQLAdapter.Repositories
 {
     public class BranchRepositoryI : IBranchRepository
     {
@@ -26,8 +26,8 @@ namespace Infrastructure.SQLAdapter.Repositories
                     branchEntity.Name.Name,
                     branchEntity.Location.City,
                     branchEntity.Location.Country
-                );                 
-                    
+                );
+
                 context.Add(branchToCreate);
                 await context.SaveChangesAsync();
 
@@ -48,7 +48,7 @@ namespace Infrastructure.SQLAdapter.Repositories
             var branchQueryVm = _mapper.Map<BranchQueryResponse>(branchWithRelatedData);
 
             return branchQueryVm;
-            
+
         }
 
         public async Task<List<BranchQueryResponse>> GetAllBranchesAsync()

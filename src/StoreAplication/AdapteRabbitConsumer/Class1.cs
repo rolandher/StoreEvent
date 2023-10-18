@@ -1,4 +1,4 @@
-﻿namespace AdapteRabbitConsumer
+﻿namespace AdapterSubscribe
 {
     public class Class1
     {

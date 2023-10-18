@@ -1,4 +1,4 @@
-﻿namespace Domain.ObjectValues
+﻿namespace Domain.ObjectValues.ObjectValuesUser
 {
     public class UserObjectName
     {
