@@ -1,4 +1,4 @@
-﻿namespace StoreAplication.Middleware
+﻿namespace ApiCommand.Middleware
 {
     public class ErrorHandleMiddleware
     {

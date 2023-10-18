@@ -2,7 +2,7 @@
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace StoreApiQuery.Controllers.SalesQuery
+namespace ApiQuery.Controllers.SalesQuery
 {
     [Route("api/[controller]")]
     [ApiController]

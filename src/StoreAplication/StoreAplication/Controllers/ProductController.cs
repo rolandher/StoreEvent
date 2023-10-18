@@ -4,7 +4,7 @@ using Domain.Response.Sale;
 using Microsoft.AspNetCore.Mvc;
 using UseCasesCommand.UseCases.ProductCase;
 
-namespace StoreAplication.Controllers
+namespace ApiCommand.Controllers
 {
     [Route("api/v1/product/register")]
     [ApiController]

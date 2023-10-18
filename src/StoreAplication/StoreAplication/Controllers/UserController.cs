@@ -3,7 +3,7 @@ using Domain.Response.User;
 using Microsoft.AspNetCore.Mvc;
 using UseCasesCommand.UseCases.UserCase;
 
-namespace StoreAplication.Controllers
+namespace ApiCommand.Controllers
 {
     [Route("api/v1/user/register")]
     [ApiController]

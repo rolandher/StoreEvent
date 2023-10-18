@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace StoreAplication.AutoMapper
+namespace ApiCommand.AutoMapper
 {
     public class ConfigurationProfile : Profile
     {

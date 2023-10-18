@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UseCasesQuery.QuerysUseCase.QueryProductUseCase;
 
-namespace StoreApiQuery.Controllers.ProductQuery
+namespace ApiQuery.Controllers.ProductQuery
 {
     [Route("api/[controller]")]
     [ApiController]

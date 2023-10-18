@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UseCasesQuery.QuerysUseCase.QueryBranchUseCase;
 
-namespace StoreApiQuery.Controllers.BranchQuery
+namespace ApiQuery.Controllers.BranchQuery
 {
     [Route("api/[controller]")]
     [ApiController]

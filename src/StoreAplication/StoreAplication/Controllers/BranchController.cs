@@ -3,7 +3,7 @@ using Domain.Response.Branch;
 using Microsoft.AspNetCore.Mvc;
 using UseCasesCommand.UseCases.BranchCase;
 
-namespace StoreAplication.Controllers
+namespace ApiCommand.Controllers
 {
     [Route("api/v1/branch/register")]
     [ApiController]

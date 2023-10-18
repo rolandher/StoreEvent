@@ -1,4 +1,4 @@
-namespace StoreApiQuery
+namespace ApiQuery
 {
     public class WeatherForecast
     {
