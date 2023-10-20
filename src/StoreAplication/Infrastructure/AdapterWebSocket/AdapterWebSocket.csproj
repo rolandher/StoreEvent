@@ -11,8 +11,4 @@
     <PackageReference Include="RabbitMQ.Client" Version="6.6.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Api\ApiQuery\ApiQuery.csproj" />
-  </ItemGroup>
-
 </Project>

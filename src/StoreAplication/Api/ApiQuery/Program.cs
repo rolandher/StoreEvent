@@ -2,6 +2,7 @@ using AdapterSQL.ConfigurationProfileSql;
 using AdapterSQL.SQLAdapter;
 using AdapterSQL.SQLAdapter.Repositories;
 using AdapterSubscribe.SubscribeE;
+using ApiQuery.Hubs;
 using AutoMapper.Data;
 using Microsoft.EntityFrameworkCore;
 using UseCasesCommand.Gateway.Repositories.BranchRepository;
@@ -18,7 +19,7 @@ using UseCasesQuery.RepositoriesQ.UserRepositoryQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddSignalR();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyCorsPolicy", builder =>
@@ -40,6 +41,7 @@ builder.Services.AddTransient<QUserGetIdUseCase>();
 builder.Services.AddTransient<QUserGetAllUseCase>();
 
 builder.Services.AddHostedService<SubscribeEvent>();
+builder.Services.AddHostedService<SubcribeSockets>();
 
 
 
@@ -92,6 +94,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseCors("MyCorsPolicy");
+
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<MessageHub>("/Socket");
+});
 
 app.MapControllers();
 

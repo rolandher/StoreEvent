@@ -1,5 +1,7 @@
-﻿using ApiWebSocket.Hubs;
+﻿using ApiQuery.Hubs;
 using Domain.Entities;
+using Domain.ObjectValues.ObjectValuesBranch;
+using Domain.Response.Branch;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -8,7 +10,7 @@ using RabbitMQ.Client.Events;
 using System.Text;
 using UseCasesQuery.Factory;
 
-namespace AdapterSocket
+namespace AdapterSubscribe.SubscribeE
 {
     public class SubcribeSockets : BackgroundService
     {
@@ -63,8 +65,15 @@ namespace AdapterSocket
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 BranchEntity branchToCreate = JsonConvert.DeserializeObject<BranchEntity>(message);
-                await _messageHub.Clients.All.SendAsync("BranchCreated", message);
-                Console.WriteLine($"Recibido en Topic 1: '{message}'");
+                var branchName = new BranchObjectName(branchToCreate.Name.Name);
+                var branchLocation = new BranchObjectLocation(branchToCreate.Location.Country, branchToCreate.Location.City);
+                var branchEntity = new BranchEntity(branchName, branchLocation);
+                var responseB = new BranchResponse();
+                responseB.BranchId = branchEntity.BranchId;
+                responseB.Location = $"{branchEntity.Location.City}, {branchEntity.Location.Country}";
+                responseB.Name = branchEntity.Name.Name;
+                await _messageHub.Clients.All.SendAsync("BranchCreated", responseB);
+                Console.WriteLine($"Recibido en Topic 1: '{responseB}'");
             };
 
             var registerProductUseCase = _factoryProduct.Create();
@@ -73,7 +82,8 @@ namespace AdapterSocket
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                await registerProductUseCase.RegisterProduct(message);
+                ProductEntity productToCreate = JsonConvert.DeserializeObject<ProductEntity>(message);
+                await _messageHub.Clients.All.SendAsync("ProductCreated", message);
                 Console.WriteLine($"Recibido en Topic 2: '{message}'");
             };
 

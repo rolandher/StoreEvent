@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace AdapterWebSocket.Hubs
+namespace ApiQuery.Hubs
 {
     public class MessageHub : Hub
     {
