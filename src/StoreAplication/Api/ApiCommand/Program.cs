@@ -49,6 +49,8 @@ builder.Services.AddScoped<ISalesRepository, SalesRepository>();
 builder.Services.AddScoped<IStoredEventRepository, StoredEventRepository>();
 builder.Services.AddScoped<IPublishEventRepository, PublishEvent>();
 
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(config => config.AddDataReaderMapping(), typeof(ProfileMongo));

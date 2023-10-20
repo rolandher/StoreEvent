@@ -18,6 +18,7 @@ using UseCasesQuery.RepositoriesQ.UserRepositoryQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyCorsPolicy", builder =>
@@ -39,6 +40,8 @@ builder.Services.AddTransient<QUserGetIdUseCase>();
 builder.Services.AddTransient<QUserGetAllUseCase>();
 
 builder.Services.AddHostedService<SubscribeEvent>();
+
+
 
 builder.Services.AddSingleton<IBranchUseCaseQueryFactory, BranchUseCaseQueryFactory>();
 builder.Services.AddScoped<IBranchUseCaseQuery, QBranchUseCase>();
@@ -87,6 +90,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
 app.UseCors("MyCorsPolicy");
 
 app.MapControllers();

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Application\UseCasesQuery\UseCasesQuery.csproj" />
+    <ProjectReference Include="..\..\Api\ApiQuery\ApiQuery.csproj" />
   </ItemGroup>
 
 </Project>

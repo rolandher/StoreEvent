@@ -7,21 +7,23 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["StoreApiQuery/StoreApiQuery.csproj", "StoreApiQuery/"]
-COPY ["AdapteRabbitConsumer/AdapteRabbitConsumer.csproj", "AdapteRabbitConsumer/"]
-COPY ["UseCasesQuery/UseCasesQuery.csproj", "UseCasesQuery/"]
+COPY ["Api/ApiQuery/ApiQuery.csproj", "Api/ApiQuery/"]
+COPY ["Application/UseCasesQuery/UseCasesQuery.csproj", "Application/UseCasesQuery/"]
 COPY ["Domain/Domain/Domain.csproj", "Domain/Domain/"]
-COPY ["UseCases/UseCases.csproj", "UseCases/"]
-COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
-RUN dotnet restore "StoreApiQuery/StoreApiQuery.csproj"
+COPY ["Application/UseCasesCommand/UseCasesCommand.csproj", "Application/UseCasesCommand/"]
+COPY ["Infrastructure/AdapterSQL/AdapterSQL.csproj", "Infrastructure/AdapterSQL/"]
+COPY ["Infrastructure/AdapterSubscribe/AdapterSubscribe.csproj", "Infrastructure/AdapterSubscribe/"]
+COPY ["Infrastructure/AdapterWebSocket/AdapterWebSocket.csproj", "Infrastructure/AdapterWebSocket/"]
+COPY ["Api/ApiWebSocket/ApiWebSocket.csproj", "Api/ApiWebSocket/"]
+RUN dotnet restore "Api/ApiQuery/ApiQuery.csproj"
 COPY . .
-WORKDIR "/src/StoreApiQuery"
-RUN dotnet build "StoreApiQuery.csproj" -c Release -o /app/build
+WORKDIR "/src/Api/ApiQuery"
+RUN dotnet build "ApiQuery.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "StoreApiQuery.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ApiQuery.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "StoreApiQuery.dll"]
+ENTRYPOINT ["dotnet", "ApiQuery.dll"]

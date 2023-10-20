@@ -50,7 +50,7 @@ namespace AdapterSQL.SQLAdapter.Repositories
 
             using (var context = new DbConnectionBuilder())
             {
-                var existingProduct = await context.Product.FindAsync(productId);               
+                var existingProduct = await context.Product.FindAsync(productId);
 
                 existingProduct.InvetoryStock += product.InventoryStock;
 
@@ -66,7 +66,7 @@ namespace AdapterSQL.SQLAdapter.Repositories
             using (var context = new DbConnectionBuilder())
             {
                 var existingProduct = await context.Product.FindAsync(command.ProductId);
-               
+
                 existingProduct.InvetoryStock -= command.Quantity;
 
                 await context.SaveChangesAsync();

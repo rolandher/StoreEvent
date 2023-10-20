@@ -34,12 +34,26 @@ namespace AdapterPublish.PublishE
             _channel.QueueBind("queue.product.reseller-sale", "topic_exchange", "topic.routing.product.reseller-sale");
             _channel.QueueBind("queue.user.register", "topic_exchange", "topic.routing.user");
 
+            _channel.QueueDeclare("queue.branch.register.socket", true, false, false);
+            _channel.QueueDeclare("queue.product.register.socket", true, false, false);
+            _channel.QueueDeclare("queue.product.purchase.socket", true, false, false);
+            _channel.QueueDeclare("queue.product.customer-sale.socket", true, false, false);
+            _channel.QueueDeclare("queue.product.reseller-sale.socket", true, false, false);
+            _channel.QueueDeclare("queue.user.register.socket", true, false, false);
+            _channel.QueueBind("queue.branch.register.socket", "topic_exchange", "topic.routing.branch.socket");
+            _channel.QueueBind("queue.product.register.socket", "topic_exchange", "topic.routing.product.socket");
+            _channel.QueueBind("queue.product.purchase.socket", "topic_exchange", "topic.routing.product.purshase.socket");
+            _channel.QueueBind("queue.product.customer-sale.socket", "topic_exchange", "topic.routing.product.customer-sale.socket");
+            _channel.QueueBind("queue.product.reseller-sale.socket", "topic_exchange", "topic.routing.product.reseller-sale.socket");
+            _channel.QueueBind("queue.user.register.socket", "topic_exchange", "topic.routing.user.socket");
+
         }
 
         public void PublishRegisterBranchEvent(StoredEventEntity eventToPublished)
         {
             var body = Encoding.UTF8.GetBytes(eventToPublished.EventBody);
             _channel.BasicPublish("topic_exchange", "topic.routing.branch", null, body);
+            _channel.BasicPublish("topic_exchange", "topic.routing.branch.socket", null, body);
             Console.WriteLine($"Enviado: '{eventToPublished.EventBody}'");
         }
 
@@ -47,6 +61,7 @@ namespace AdapterPublish.PublishE
         {
             var body = Encoding.UTF8.GetBytes(eventToPublished.EventBody);
             _channel.BasicPublish("topic_exchange", "topic.routing.product", null, body);
+            _channel.BasicPublish("topic_exchange", "topic.routing.product.socket", null, body);
             Console.WriteLine($"Enviado: '{eventToPublished.EventBody}'");
         }
 
